@@ -38,7 +38,10 @@ function EngWordsPage(){
                             "justifyContent": "space-evenly"
                         }}
                     >
-                        <MButton css ={{height : "10vh"}}>
+                        <MButton css ={{
+                            width : "10vw",
+                            height : "10vh"
+                        }}>
                             <Text>test</Text>
                         </MButton>
                         <MButton>
