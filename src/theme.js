@@ -21,10 +21,6 @@ const deskTopFontSizes = {
   hd : "48px"
 }
 
-const tabletFontSizes = {
-  
-};
-
 const paddings = {
   small: calcRem(8),
   base: calcRem(10),
@@ -80,8 +76,13 @@ const device = {
   tabletL: `only screen and (max-width: ${deviceSizes.tabletL})`,
 };
 
+const fontFamily = {
+  comic : "Comic Sans MS, Comic Sans, cursive;"
+}
+
 const theme = {
   fontSizes,
+  fontFamily,
   deskTopFontSizes,
   colors,
   deviceSizes,
