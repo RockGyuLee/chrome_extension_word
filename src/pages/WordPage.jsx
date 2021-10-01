@@ -1,7 +1,7 @@
 import React from 'react';
 import useAsync from "../util/useAsync";
 import { getEngWords } from "../firebase/selecDb";
-import { Container, Flex, TitleWord ,Text, MButton} from "../components/Main";
+import { ReactContainer, Container, Flex, TitleWord ,Text, MButton} from "../components/Main";
 
 function EngWordsPage(){
 
@@ -13,7 +13,9 @@ function EngWordsPage(){
 
     return (
         <Container>
-            <Container height={"30vh"} css={{"paddingBotton" : "2vh"}}>
+            <ReactContainer 
+                elg={12} lg={12} md={3} sm={12} esm={12}
+                height={3}>
                 <Flex css={{
                     "width" : "100%",
                     "height" : "100%",
@@ -25,8 +27,8 @@ function EngWordsPage(){
                         Happy
                     </TitleWord>
                 </Flex>
-            </Container>
-            <Container height={"70vh"}>
+            </ReactContainer>
+            <ReactContainer height={9}>
                 <Flex css={{
                     "width" : "100%",
                     "height" : "100%",
@@ -35,28 +37,25 @@ function EngWordsPage(){
                     <Flex
                         css = {{
                             "width" : "100vw",
-                            "justifyContent": "space-evenly"
+                            "justifyContent": "space-evenly",
+                            "marginBottom" : "10vh"
                         }}
                     >
-                        <MButton css ={{
-                            width : "10vw",
-                            height : "10vh"
-                        }}>
-                            <Text>test</Text>
+                        <MButton radius="12px" color="#C8D9EB">
+                            <Text size="xxxl">행복한</Text>
                         </MButton>
-                        <MButton>
-                            <Text>test</Text>
+                        <MButton radius="12px">
+                            <Text>행복</Text>
                         </MButton>
-                        <MButton>
-                            <Text>test</Text>
+                        <MButton radius="12px">
+                            <Text>행운</Text>
                         </MButton>
-                        <MButton>
-                            <Text>test</Text>
+                        <MButton radius="12px">
+                            <Text>행복하게</Text>
                         </MButton>
                     </Flex>
                 </Flex>
-            </Container>
-            
+            </ReactContainer>
         </Container>
     )
 }

@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { ThemeProvider } from "styled-components";
+import "./style/App.css";
 import theme from "./theme.js";
-import {auth, db} from "./firebase/firebase.js";
-import useAsync from './util/useAsync.js'; "./util/useAsync";
+// import {auth, db} from "./firebase/firebase.js";
 import EngWordsPage from "./pages/WordPage";
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 // 로그인 함수.
 // signInWithEmailAndPassword(auth, "test@test.com", "tester")

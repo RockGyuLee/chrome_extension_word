@@ -1,0 +1,9 @@
+@font-face {
+    font-family: Nanum;
+    src: url('./font/NanumPenScript-Regular.ttf');
+}
+
+@font-face {
+    font-family: HiMelody;
+    src: url('./font/HiMelody-Regular.ttf');
+}

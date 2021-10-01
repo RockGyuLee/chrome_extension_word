@@ -7,7 +7,7 @@ const fontSizes = {
   xl: calcRem(20),
   text : "20px",
   xxl: calcRem(22),
-  xxxl: calcRem(24),
+  xxxl: calcRem(30),
   titleSize: calcRem(50),
   subTitleSize: calcRem(40),
 };
@@ -66,6 +66,7 @@ const colors = {
   green_1: "#3cb46e",
   main : "#333333",
   backG : "#d9d9d9",
+  btn : "#EBDBFA",
 };
 
 const device = {
