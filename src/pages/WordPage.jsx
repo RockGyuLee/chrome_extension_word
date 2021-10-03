@@ -1,20 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useAsync from "../util/useAsync";
 import { getEngWords } from "../firebase/selecDb";
-import { ReactContainer, Container, Flex, TitleWord ,Text, MButton} from "../components/Main";
+import { ReactContainer, Container, Flex, TitleWord ,Text} from "../components/Main";
+import { MButton } from "../components/Button"
 
 function EngWordsPage(){
 
+    const [word, setWord] = useState({
+        word: "happy",
+        description : "행복한"
+    })
     const [state, refetch] = useAsync(getEngWords);
 
     const { loading, data, error } = state;
 
     console.log("loading, data, error",loading, data, error);
 
+    //test logic start
+    let descriptionArr = [
+        "행복한",
+        "행복",
+        "행운",
+        "행복하게"
+    ]
+
+    //test logic end;
+
+
+
     return (
         <Container>
             <ReactContainer 
-                elg={12} lg={12} md={3} sm={12} esm={12}
+                elg={12} lg={12} md={12} sm={12} esm={12}
                 height={3}>
                 <Flex css={{
                     "width" : "100%",
@@ -24,7 +41,7 @@ function EngWordsPage(){
                     "justifyContent" : "center",
                 }}>
                     <TitleWord size={"hd"}>
-                        Happy
+                        {word.word}
                     </TitleWord>
                 </Flex>
             </ReactContainer>
@@ -41,18 +58,13 @@ function EngWordsPage(){
                             "marginBottom" : "10vh"
                         }}
                     >
-                        <MButton radius="12px" color="#C8D9EB">
-                            <Text size="xxxl">행복한</Text>
-                        </MButton>
-                        <MButton radius="12px">
-                            <Text>행복</Text>
-                        </MButton>
-                        <MButton radius="12px">
-                            <Text>행운</Text>
-                        </MButton>
-                        <MButton radius="12px">
-                            <Text>행복하게</Text>
-                        </MButton>
+                        {
+                            descriptionArr.map((item, index)=>{
+                                return (
+                                    <MButton key={index} isCheck={false} word={word} text={item}/>                                        
+                                )
+                            })
+                        }
                     </Flex>
                 </Flex>
             </ReactContainer>

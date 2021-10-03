@@ -47,7 +47,6 @@ function useAsync(callback, deps =[]){
         fetchData();
     }, deps);
 
-    console.log("state",state);
 
 
     return [state, fetchData];

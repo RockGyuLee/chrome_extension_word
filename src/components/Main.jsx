@@ -1,11 +1,8 @@
 import React from "react";
 import styled, {css} from "styled-components";
 
-const calcWidthComponent = size => {
+export const calcWidthComponent = size => {
     if(!size) return;
-
-    console.log("size",size);
-
     const width = (size / 12) * 100;
     return width;
 }
@@ -14,7 +11,6 @@ const calcHeightComponent = size => {
     if(!size) return;
 
     const height = (size / 12 ) * 100;
-    console.log(height);
     return height; 
 }
 
@@ -67,7 +63,7 @@ export const Flex = styled.div`
     display : flex;
 `
 
-export const Text = styled.span`
+export const Text = styled.div`
     font-size : ${({theme, size})=> theme.fontSizes[size] || theme.deskTopFontSizes["md"]};
     font-family : 'Himelody';
 `

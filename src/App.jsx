@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from "styled-components";
 import "./style/App.css";
+import "./style/common.styl";
 import theme from "./theme.js";
 // import {auth, db} from "./firebase/firebase.js";
 import EngWordsPage from "./pages/WordPage";
