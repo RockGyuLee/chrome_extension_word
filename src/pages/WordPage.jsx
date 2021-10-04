@@ -1,20 +1,26 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import useAsync from "../util/useAsync";
 import { getEngWords } from "../firebase/selecDb";
 import { ReactContainer, Container, Flex, TitleWord ,Text} from "../components/Main";
-import { MButton } from "../components/Button"
+import { MButton } from "../components/Button";
+
+//module Function import
+import { getRandomArbitrary } from "../util/util";
 
 function EngWordsPage(){
 
-    const [word, setWord] = useState({
-        word: "happy",
-        description : "행복한"
-    })
     const [state, refetch] = useAsync(getEngWords);
 
     const { loading, data, error } = state;
 
-    console.log("loading, data, error",loading, data, error);
+    const [word, setWord] = useState(undefined);
+
+    useEffect(()=>{
+        if(data === null) return;
+        let list = data[0].word;
+        let randomIndex = getRandomArbitrary(0, list.length);
+        setWord(list[randomIndex]);
+    },[data]);
 
     //test logic start
     let descriptionArr = [
@@ -25,8 +31,6 @@ function EngWordsPage(){
     ]
 
     //test logic end;
-
-
 
     return (
         <Container>
@@ -41,11 +45,15 @@ function EngWordsPage(){
                     "justifyContent" : "center",
                 }}>
                     <TitleWord size={"hd"}>
-                        {word.word}
+                        {
+                            ( word != undefined ) && word.spelling
+                        }
                     </TitleWord>
                 </Flex>
             </ReactContainer>
-            <ReactContainer height={9}>
+            <ReactContainer elg={12} lg={12} md={12} sm={12} esm={12}
+                height={9}
+            >
                 <Flex css={{
                     "width" : "100%",
                     "height" : "100%",
@@ -61,7 +69,7 @@ function EngWordsPage(){
                         {
                             descriptionArr.map((item, index)=>{
                                 return (
-                                    <MButton key={index} isCheck={false} word={word} text={item}/>                                        
+                                    <MButton key={index} isCheck={false} wordList={word} text={item}/>                                        
                                 )
                             })
                         }
