@@ -5,8 +5,10 @@ export function getRandomArbitrary(min, max) {
   }
 
 
-export function getRandomAr4Answer(arList, min, max){
-    let arr = [];
+export function getRandomAr4Answer(arList, max, succ){
+    let arr = new Array(4);
+
+
 
     return arr;
 }

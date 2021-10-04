@@ -3,11 +3,7 @@ import { ThemeProvider } from "styled-components";
 import "./style/App.css";
 import "./style/common.styl";
 import theme from "./theme.js";
-// import {auth, db} from "./firebase/firebase.js";
 import EngWordsPage from "./pages/WordPage";
-
-// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-// import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 // 로그인 함수.
 // signInWithEmailAndPassword(auth, "test@test.com", "tester")

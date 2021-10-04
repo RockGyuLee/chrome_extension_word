@@ -5,7 +5,7 @@ import { ReactContainer, Container, Flex, TitleWord ,Text} from "../components/M
 import { MButton } from "../components/Button";
 
 //module Function import
-import { getRandomArbitrary } from "../util/util";
+import { getRandomArbitrary, getRandomAr4Answer } from "../util/util";
 
 function EngWordsPage(){
 
