@@ -5,7 +5,7 @@ import { ReactContainer, Container, Flex, TitleWord ,Text} from "../components/M
 import { MButton } from "../components/Button";
 
 //module Function import
-import { getRandomArbitrary, getRandomAr4Answer } from "../util/util";
+import { getRandomArbitrary, getRandomAr4Answer, shuffle } from "../util/util";
 
 function EngWordsPage(){
 
@@ -14,23 +14,21 @@ function EngWordsPage(){
     const { loading, data, error } = state;
 
     const [word, setWord] = useState(undefined);
+    const [descriptionArr, setDescription] = useState(undefined);
 
     useEffect(()=>{
         if(data === null) return;
         let list = data[0].word;
         let randomIndex = getRandomArbitrary(0, list.length);
         setWord(list[randomIndex]);
+
+        let descArr = getRandomAr4Answer(list, list.length, randomIndex);
+        shuffle(descArr);
+        
+        setDescription(descArr);
     },[data]);
 
-    //test logic start
-    let descriptionArr = [
-        "행복한",
-        "행복",
-        "행운",
-        "행복하게"
-    ]
-
-    //test logic end;
+    console.log(descriptionArr)
 
     return (
         <Container>
@@ -66,10 +64,17 @@ function EngWordsPage(){
                             "marginBottom" : "10vh"
                         }}
                     >
-                        {
-                            descriptionArr.map((item, index)=>{
+                        {/* {
+                           ( descriptionArr != undefined ) && descriptionArr.map((item, index)=>{
                                 return (
                                     <MButton key={index} isCheck={false} wordList={word} text={item}/>                                        
+                                )
+                            })
+                        } */}
+                        {
+                           ( descriptionArr != undefined ) && descriptionArr.map((item, index)=>{
+                                return (
+                                    <MButton key={index} isCheck={false} word={word} text={item.description}/>                                        
                                 )
                             })
                         }
