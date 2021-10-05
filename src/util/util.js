@@ -21,7 +21,7 @@ export function getRandomAr4Answer(arList = [], max, succIndex){
     return arr;
 }
 
-export function shuffle(array) {
+export function getShuffleArray(array) {
   let currentIndex = array.length,  randomIndex;
 
   // While there remain elements to shuffle...

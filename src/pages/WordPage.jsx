@@ -5,7 +5,7 @@ import { ReactContainer, Container, Flex, TitleWord ,Text} from "../components/M
 import { MButton } from "../components/Button";
 
 //module Function import
-import { getRandomArbitrary, getRandomAr4Answer, shuffle } from "../util/util";
+import { getRandomArbitrary, getRandomAr4Answer, getShuffleArray } from "../util/util";
 
 function EngWordsPage(){
 
@@ -23,9 +23,9 @@ function EngWordsPage(){
         setWord(list[randomIndex]);
 
         let descArr = getRandomAr4Answer(list, list.length, randomIndex);
-        shuffle(descArr);
         
-        setDescription(descArr);
+        
+        setDescription(getShuffleArray(descArr));
     },[data]);
 
     console.log(descriptionArr)
