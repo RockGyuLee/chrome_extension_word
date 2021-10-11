@@ -3,7 +3,8 @@ import { ThemeProvider } from "styled-components";
 import "./style/App.css";
 import "./style/common.styl";
 import theme from "./theme.js";
-import EngWordsPage from "./pages/WordPage";
+import EngWordsPage , {EngWordsPage2} from "./pages/WordPage";
+import Header from "./pages/Logo";
 
 // 로그인 함수.
 // signInWithEmailAndPassword(auth, "test@test.com", "tester")
@@ -28,7 +29,9 @@ export default function App(){
 
     return(
         <ThemeProvider theme={theme}>
+            <Header/>
             <EngWordsPage/>
+            {/* <EngWordsPage2 /> */}
         </ThemeProvider>
     )
 }

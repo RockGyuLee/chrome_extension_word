@@ -6,7 +6,7 @@ export function getRandomArbitrary(min, max) {
 
 
 export function getRandomAr4Answer(arList = [], max, succIndex){
-  let list = arList;  
+  let list = arList.map(item => item);
   let arr = [];
   arr.push(list[succIndex]);
   list.splice(succIndex, 1);
@@ -15,9 +15,6 @@ export function getRandomAr4Answer(arList = [], max, succIndex){
       arr.push(list[arIndex]);
       list.splice(arIndex, 1);
     }
-
-    console.log("arr",arr, list);
-
     return arr;
 }
 

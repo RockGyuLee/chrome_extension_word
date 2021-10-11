@@ -11,7 +11,7 @@ const calcHeightComponent = size => {
     if(!size) return;
 
     const height = (size / 12 ) * 100;
-    return height; 
+    return height;
 }
 
 const EXTRA_SMALL_DEVICES = 600;
@@ -72,103 +72,53 @@ export const Span = styled(Text)`
     color : ${({color, theme }) => theme.colors[color] };
 `
 
-// export const Atag = styled.a`
-//     text-decoration : none;
-//     color : ${({theme}) => theme.colors.black}
-// `
+export const Logo = styled.div`
+    width : ${({ width })=> ( width ? `${calcWidthComponent(width)}%` : "100%")};
+    height : ${({ height })=> ( height ? `${calcHeightComponent(height)}%` : "100%")};
+    text-align : center;
+    background-color : #A2D2FF;
+    border-top-right-radius : 10px;
+    border-bottom-right-radius: 10px;
+    position : absolute;
+    transition : 0.3s;
 
-// export const Line = styled.div`
-//     border : dashed 1px;
-//     color : ${({theme, color})=> theme.colors[color]};
-// `
+    @media only screen and (max-width: ${EXTRA_SMALL_DEVICES}px){
+        margin-top : ${({ esm })=> esm && `${calcWidthComponent(esm)}%`};
+    }
 
-// export const RadiusImg = styled.img`
-//     border-radius : 5%;
-// `
+    @media only screen and (min-width: ${SMALL_DEVICES}px){
+        margin-top : ${({ sm })=> sm && `${calcWidthComponent(sm)}%`};
+    }
 
-// export const ClickInlineli = styled.li`
-//     display : inline-block;
-//     cursor: pointer;
-//     -webkit-transition: all 0.2s ease-in-out;
-//     -moz-transition: all 0.2s ease-in-out;
-//     -o-transition: all 0.2s ease-in-out;
-//     transition: all 0.2s ease-in-out;
-//     position: relative;
-//     border: 1px solid black;
+    @media only screen and (min-width: ${MEDIUM_DEVICES}px){
+        margin-top : ${({ md })=> md && `${calcWidthComponent(md)}%`};
+    }
+
+    @media only screen and (min-width: ${LARGE_DEVICES}px){
+        margin-top : ${({ lg })=> lg && `${calcWidthComponent(lg)}%`};
+    }
+
+    @media only screen and (min-width: ${EXTRA_LARGE_DEVICES}px){
+        margin-top : ${({ elg })=> elg && `${calcWidthComponent(elg)}%`};
+    }
+
+    &:hover {
+        width : ${({ width })=> ( width && `${calcHeightComponent( width + 0.05)}%`)};
+    }
+
     
-//     &:hover {
-//         border: 1px solid red;
-//         margin-left : 1%;
-//         box-shadow : 10px 5px 5px red;
-//     }
-// `
+`
 
-// export const ClickDiv = styled.div`
-//     cursor: pointer;
-//     -webkit-transition: all 0.2s ease-in-out;
-//     -moz-transition: all 0.2s ease-in-out;
-//     -o-transition: all 0.2s ease-in-out;
-//     transition: all 0.2s ease-in-out;
-//     position: relative;
-//     border: 1px solid black;
-    
-//     &:hover {
-//         border: 1px solid red;
-//         margin-left : 1%;
-//         box-shadow : 10px 5px 5px red;
-//     }
-// `
+export const Icon = styled.div`
+    margin : 5px;
+    transition : 0.3s;
+    cursor : pointer;
 
-// export const Item = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 600px;
-//   width: 500px;
-//   color: #fff;
-//   margin: 15px;
-//   font-size: 4em;
-//   flex-direction : column;
-//   cursor: pointer;
-//   position : relative;
-// `;
-
-// export const CarouselItem = styled.div`
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     height: 600px;
-//     width: 600px;
-//     color : black;
-//     margin: 15px;
-//     font-size: 4em;
-//     flex-direction : column;
-//     position : relative;
-// `
-
-// export const DisplayOver = styled.div({
-//     height: "100%",
-//     left: "0",
-//     position: "absolute",
-//     top: "0",
-//     width: "100%",
-//     border: "solid",
-//     zIndex: 2,
-//     backgroundColor: "transparent",
-//     padding: "20px 20px 0 20px",
-//     boxSizing: "border-box",
-//     opacity : 1,
-//     display : "grid",
-//     placeItems : "center",
-// });
-
-// export const TitleWord = styled.h2({
-//   textTransform: "uppercase",
-//   fontSize : "18px",
-//   fontFamily: "Helvetica",
-// });
-
-
+    ${Logo}:hover & {
+        fill: rebeccapurple;
+        margin-left : 10px;
+    }
+`
 
 export const MButton = styled.button`
     border : 0mm solid ${({color,theme}) => color || theme.colors.main};
@@ -183,4 +133,11 @@ export const MButton = styled.button`
             color : ${({color,theme}) => theme.colors.white};
         }
     }
+`
+
+export const TabBar = styled.div`
+    position : absolute;
+    height : 100%;
+    border : 0.7mm solid #A2D2FF;
+    transition : all 0.2s ease-in;
 `
