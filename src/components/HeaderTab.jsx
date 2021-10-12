@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 //module imports
 import { Flex, TabBar, calcWidthComponent} from "../components/Main";
 import CustomModal from "../components/Modal";
+// import from "";
 
 const headerActive = {
     width : `${calcWidthComponent(1.3)}%`,
