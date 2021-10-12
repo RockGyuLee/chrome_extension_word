@@ -30,7 +30,7 @@ const TagList = [
     },
     {
         Comp :  <FontAwesomeIcon icon={faPen} size={"lg"} />,
-        desc : "단어 추가"
+        desc : "단어 추가/삭제"
     }
     
    
