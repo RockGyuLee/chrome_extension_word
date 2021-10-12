@@ -1,23 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faPen } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 
 //module imports
 import { Flex, TabBar, calcWidthComponent} from "../components/Main";
+import CustomModal from "../components/Modal";
 
 const headerActive = {
-    opacity : 1,
     width : `${calcWidthComponent(1.3)}%`,
-    backgroundColor : "#A2D2FF",
-    transition: "opacity 0.3s",
+    backgroundColor : "#E3FDFD",
+    left : "0px",
+    transition: "0.5s ",
 }
 
 const headerHidden = {
-    opacity : 0,
-    visibility: "hidden",
     position: "absolute",
-    transition: "opacity 0.3s , visibility 0.3s esay out",
+    overflow: "hidden",
+    left : "-100px",
+    transition: "0.5s",
 }
 
 const TagList = [
@@ -35,27 +37,52 @@ const TagList = [
 
 const OptionTag = styled.div`
     display : flex;
-    margin-top : 15%;
-    margin-bottom : 15%;
-    z-index : 999;
+    margin-top : 20%;
+    margin-bottom : 20%;
+    z-index : 1;
+    cursor : pointer;
 `
 
 function HeaderTab( {isShow} ){
 
+   const [modalState, setModalState ] = useState({
+        isOpen : false,
+        data : {}
+   });
+
+   const openModal = (idx) => {
+       setModalState(Object.assign({}, {
+            isOpen : true,
+            data : {
+                hText : TagList[idx].desc
+            }
+       }));
+   }
+
+   const closeModal = () => {
+       setModalState(Object.assign({}, {
+            isOpen : false,
+            data : {}
+       }));
+   }
+
     return (
         <TabBar style={isShow ? headerActive : headerHidden}>
                 {
-                    TagList.map( item => 
-                        <OptionTag>
-                            <div style={{width : "30%", marginLeft : "5%"}}>
+                    TagList.map( (item, index) => 
+                        <OptionTag key={index} onClick={openModal.bind(null, index)}>
+                            <div style={{width : "30%", marginLeft : "5%", color : "#222831"}}>
                                 {item.Comp}
                             </div>
-                            <div style={{width : "70%"}}>
+                            <div style={{width : "70%", color : "#222831"}}>
                                 {item.desc}
                             </div>
                         </OptionTag>
                     )
                 }
+                <CustomModal isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
+                    test
+                </CustomModal>
         </TabBar>
     )
 }

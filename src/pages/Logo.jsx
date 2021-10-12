@@ -12,15 +12,13 @@ function Header(){
 
     const [isTabVisible, setIsTabVisible] = useState(false);
 
-
-
     return(
         <Fragment>
             <HeaderTab isShow={isTabVisible} />
             <Logo
                 css={{
                     "display" : "flex", "justify-content" : "center", "align-items" : "center",
-                    "margin-left" : `${isTabVisible && calcWidthComponent(1.03)}%` 
+                    "margin-left" : `${isTabVisible && calcWidthComponent(1.3)}%` 
                 }}
                 elg={0.5} lg={0.5} md={0.5} sm={0.5} esm={0.5} height={0.6} width={0.4}
                 onClick={()=>{setIsTabVisible(!isTabVisible)}}
