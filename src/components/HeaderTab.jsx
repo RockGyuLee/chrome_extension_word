@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 //module imports
 import { Flex, TabBar, calcWidthComponent} from "../components/Main";
 import CustomModal from "../components/Modal";
-// import from "";
+import WordTable from "./WordTable";
 
 const headerActive = {
     width : `${calcWidthComponent(1.3)}%`,
@@ -19,7 +19,7 @@ const headerActive = {
 const headerHidden = {
     position: "absolute",
     overflow: "hidden",
-    left : "-100px",
+    left : "-200px",
     transition: "0.5s",
 }
 
@@ -82,7 +82,7 @@ function HeaderTab( {isShow} ){
                     )
                 }
                 <CustomModal isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
-                    test
+                    <WordTable />
                 </CustomModal>
         </TabBar>
     )

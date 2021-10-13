@@ -5,9 +5,9 @@ export async function getEngWords() {
     const wordCollection = collection(db, 'wordCollection');
     const wordSnapshot = await getDocs(wordCollection);
     const wordList = wordSnapshot.docs.map(doc => {
-        return doc.data()
+        return doc.get("word");
     });
-    return wordList;
+    return wordList
 }
 
 export async function getEngWords2() {

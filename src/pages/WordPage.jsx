@@ -5,7 +5,7 @@ import { faRedo } from "@fortawesome/free-solid-svg-icons";
 //module Function import
 import { getRandomArbitrary, getRandomAr4Answer, getShuffleArray } from "../util/util";
 import useAsync from "../util/useAsync";
-import { getEngWords, getEngWords2 } from "../firebase/selecDb";
+import { getEngWords } from "../firebase/selecDb";
 import { ReactContainer, Container, Flex, TitleWord ,Icon} from "../components/Main";
 import { MButton } from "../components/Button";
 
@@ -93,7 +93,7 @@ import { MButton } from "../components/Button";
 
 function EngWordsPage(){
 
-    const [state, refetch] = useAsync(getEngWords2);
+    const [state, refetch] = useAsync(getEngWords);
 
     const { loading, data = null, error } = state;
 

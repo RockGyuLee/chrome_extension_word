@@ -138,6 +138,5 @@ export const MButton = styled.button`
 export const TabBar = styled.div`
     position : absolute;
     height : 100%;
-    border : 0.7mm solid #F6F6F6;
     transition : all 0.2s ease-in;
 `
