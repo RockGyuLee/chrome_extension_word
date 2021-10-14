@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.4.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -25,6 +26,8 @@
     "react-modal": "^3.14.3",
     "react-responsive": "^8.2.0",
     "react-router-dom": "^5.2.0",
+    "react-spinners": "^0.11.0",
+    "react-table": "^7.7.0",
     "react-typed": "^1.2.0",
     "styled-components": "^5.2.3"
   },
@@ -52,6 +55,7 @@
     "@babel/plugin-transform-classes": "^7.15.4",
     "@babel/preset-env": "^7.13.12",
     "@babel/preset-react": "^7.13.13",
+    "@emotion/babel-plugin": "^11.3.0",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",

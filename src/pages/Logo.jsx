@@ -5,7 +5,7 @@ import { faChevronUp, faChevronDown, faChevronLeft, faChevronRight} from "@forta
 
 // module import
 import {Logo, Icon, calcWidthComponent} from "../components/Main";
-import HeaderTab from '../components/HeaderTab';
+import HeaderTab from './header/HeaderTab';
 
 
 function Header(){

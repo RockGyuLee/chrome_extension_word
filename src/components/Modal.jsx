@@ -18,7 +18,7 @@ const H1UnLine = styled.h1`
 const customStyles = {
   content: {
     width : '60vw',
-    height : '60vh',
+    height : '80vh',
     top: '50%',
     left: '50%',
     right: 'auto',

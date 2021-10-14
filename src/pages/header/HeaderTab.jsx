@@ -1,12 +1,12 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faSpellCheck } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
 //module imports
-import { Flex, TabBar, calcWidthComponent} from "../components/Main";
-import CustomModal from "../components/Modal";
+import { Flex, TabBar, calcWidthComponent} from "../../components/Main";
+import CustomModal from "../../components/Modal";
 import WordTable from "./WordTable";
 
 const headerActive = {
@@ -29,8 +29,8 @@ const TagList = [
         desc : "로그인"
     },
     {
-        Comp :  <FontAwesomeIcon icon={faPen} size={"lg"} />,
-        desc : "단어 추가/삭제"
+        Comp :  <FontAwesomeIcon icon={faSpellCheck} size={"lg"} />,
+        desc : "단어 목록"
     }
     
    
