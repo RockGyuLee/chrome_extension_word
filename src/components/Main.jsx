@@ -140,3 +140,11 @@ export const TabBar = styled.div`
     height : 100%;
     transition : all 0.2s ease-in;
 `
+
+export const hover = {
+    cursor : "pointer"
+}
+
+export const H1UnLine = styled.h1`
+    border-bottom : 1px solid #222831;
+`

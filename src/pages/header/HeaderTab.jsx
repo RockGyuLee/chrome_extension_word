@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faSignInAlt, faSpellCheck } from "@fortawesome/free-solid-svg-icons";
+import { faSignInAlt, faSpellCheck, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 
 //module imports
-import { Flex, TabBar, calcWidthComponent} from "../../components/Main";
+import { TabBar, calcWidthComponent, hover, H1UnLine} from "../../components/Main";
 import CustomModal from "../../components/Modal";
 import WordTable from "./WordTable";
 

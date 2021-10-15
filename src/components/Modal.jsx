@@ -5,15 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 //modules
-import { Flex } from "../components/Main";
-
-const hover = {
-    cursor : "pointer"
-}
-
-const H1UnLine = styled.h1`
-    border-bottom : 1px solid #222831;
-`
+import { hover, H1UnLine } from "../components/Main";
 
 const customStyles = {
   content: {
