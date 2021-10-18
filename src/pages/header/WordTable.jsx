@@ -11,7 +11,7 @@ import { isUpdateDb } from "../../firebase/crud";
 
 function WordTable(){
 
-    const [state, refetch] = useAsync(getEngWords);
+    const [state] = useAsync(getEngWords);
     const { loading, data = null, error } = state;
     const [items, setItems] = useState([]);
 

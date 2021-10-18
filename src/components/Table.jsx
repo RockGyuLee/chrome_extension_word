@@ -5,7 +5,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 
 const Styles = styled.div`
   padding: 1rem;
-
+  display : flex;
   table {
     border-spacing: 0;
     border: 1px solid black;
@@ -159,6 +159,7 @@ function WTable({ccolumns, items, updateMyData, ...props}){
           })}
         </tbody>
       </table>
+      <div>Test</div>
      </Styles>
      
    )
