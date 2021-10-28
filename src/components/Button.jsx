@@ -71,3 +71,21 @@ export function MButton( {word, isCheck, text, ...props }){
     )
 }
 
+export function BButton( {text, ...props }){
+
+    console.log("props!!!",props);
+
+    const handleClick = () => {
+        props.onClick();
+    }
+
+    return (
+        <Button
+            // className = {word.description == spanText ? 'btn-success' : 'btn-fail'}
+            radius="12px" bgc={bColor[2]}
+            onClick={handleClick}
+        >
+            <Text size="xxxl">{text}</Text>
+        </Button>
+    )
+}

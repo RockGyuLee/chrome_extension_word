@@ -123,8 +123,8 @@ export const Icon = styled.div`
 export const MButton = styled.button`
     border : 0mm solid ${({color,theme}) => color || theme.colors.main};
     cursor: pointer;
-    width : 10vw;
-    height : 8vh;
+    width : ${({ width })=> width || "10vw"};
+    height : ${({ height })=> height || "8vh"};;
     border-radius : ${({radius,theme}) => radius || undefined};
     background-color : ${({bgc,theme}) => bgc || theme.colors.btn};
     &:hover {
@@ -142,7 +142,7 @@ export const TabBar = styled.div`
 `
 
 export const hover = {
-    cursor : "pointer"
+    cursor : "pointer",
 }
 
 export const H1UnLine = styled.h1`
