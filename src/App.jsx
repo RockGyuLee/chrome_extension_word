@@ -18,20 +18,12 @@ import Header from "./pages/Logo";
 //     console.log("error",error)
 // });
 
-// async function getEngWords() {
-//     const wordCollection = collection(db, 'test');
-//     const wordSnapshot = await getDocs(wordCollection);
-//     const wordList = wordSnapshot.docs.map(doc => doc.data());
-//     return wordList;
-// }
-
 export default function App(){
 
     return(
         <ThemeProvider theme={theme}>
             <Header/>
             <EngWordsPage/>
-            {/* <EngWordsPage2 /> */}
         </ThemeProvider>
     )
 }

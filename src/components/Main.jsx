@@ -76,11 +76,11 @@ export const Logo = styled.div`
     width : ${({ width })=> ( width ? `${calcWidthComponent(width)}%` : "100%")};
     height : ${({ height })=> ( height ? `${calcHeightComponent(height)}%` : "100%")};
     text-align : center;
-    background-color : #A2D2FF;
+    background-color : #E3FDFD;
     border-top-right-radius : 10px;
     border-bottom-right-radius: 10px;
     position : absolute;
-    transition : 0.3s;
+    transition : 0.5s;
 
     @media only screen and (max-width: ${EXTRA_SMALL_DEVICES}px){
         margin-top : ${({ esm })=> esm && `${calcWidthComponent(esm)}%`};
@@ -123,8 +123,8 @@ export const Icon = styled.div`
 export const MButton = styled.button`
     border : 0mm solid ${({color,theme}) => color || theme.colors.main};
     cursor: pointer;
-    width : 10vw;
-    height : 8vh;
+    width : ${({ width })=> width || "10vw"};
+    height : ${({ height })=> height || "8vh"};;
     border-radius : ${({radius,theme}) => radius || undefined};
     background-color : ${({bgc,theme}) => bgc || theme.colors.btn};
     &:hover {
@@ -138,6 +138,13 @@ export const MButton = styled.button`
 export const TabBar = styled.div`
     position : absolute;
     height : 100%;
-    border : 0.7mm solid #A2D2FF;
     transition : all 0.2s ease-in;
+`
+
+export const hover = {
+    cursor : "pointer",
+}
+
+export const H1UnLine = styled.h1`
+    border-bottom : 1px solid #222831;
 `
