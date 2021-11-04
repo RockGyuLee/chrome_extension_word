@@ -22,7 +22,7 @@ const PlusStyl = styled.div`
 
 const Styles = styled.div`
   padding: 1rem;
-  display : flex;
+  width : 70%;
   table {
     border-spacing: 0;
     border: 1px solid black;
@@ -91,63 +91,6 @@ const defaultColumn = {
   Cell: EditableCell,
 }
 
-function PlusEditWord( { columns } ){
-
-  const [isPush, setIsPush ] = useState(false);
-  const [datas, setDatas ] = useState([{ 
-    spelling : "입력해주세요.",
-    description : "입력해주세요."
-  }]);
-
-  const insertHandle = () => {
-    setIsPush(true);
-  }
-
-  console.log("columns",columns)
-
-
-  return (
-    <Fragment>
-      {
-        isPush 
-        ? <table style={{ 
-              border: 'solid 1px',
-              width :'50%',
-              }}>
-            <thead>
-              {columns.map(headerGroup => (
-                <th>
-                  {headerGroup["Header"]}
-                </th>
-              ))}
-            </thead>
-            <tbody>
-                {
-                  datas.map(item => {
-                    return (
-                      <tr>
-                      <td>{item.spelling}</td>
-                      <td>{item.description}</td>
-                      </tr>
-                    )
-                  })
-                }
-                <tr>
-                  <td colSpan={2} style={{textAlign : "center"}}>
-                    <FontAwesomeIcon style={iconTag} icon={faPlusCircle} size={"lg"}/>
-                  </td>
-                </tr>
-            </tbody>
-          </table>
-        : <PlusStyl>
-            <BButton text={"추가"} onClick={insertHandle}/>
-          </PlusStyl>
-      }
-    </Fragment>
-  )
-}
-
-
 function WTable({ccolumns, items, updateMyData, ...props}){
     if(items.length == 0){
         return (
@@ -155,9 +98,11 @@ function WTable({ccolumns, items, updateMyData, ...props}){
         );
     }
 
+    console.log("Wtale",items);
+
    const data = useMemo(
      () => items,
-     []
+     [items]
    )
  
    const columns = useMemo(
@@ -188,8 +133,7 @@ function WTable({ccolumns, items, updateMyData, ...props}){
      <Styles>
        <table {...getTableProps()} style={{ 
           border: 'solid 1px',
-          width :'50%',
-          marginRight : "5%",
+          width : '100%',
           }}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -234,7 +178,6 @@ function WTable({ccolumns, items, updateMyData, ...props}){
           })}
         </tbody>
       </table>
-      <PlusEditWord columns={columns}/>
      </Styles>
      
    )

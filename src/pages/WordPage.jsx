@@ -2,7 +2,7 @@ import React, {useState, useEffect, Fragment} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import PuffLoader from "react-spinners/PuffLoader";
-
+import { useSelector } from 'react-redux';
 
 //module Function import
 import { getRandomArbitrary, getRandomAr4Answer, getShuffleArray } from "../util/util";
@@ -13,24 +13,25 @@ import { MButton } from "../components/Button";
 
 function EngWordsPage(){
 
-    const [state, refetch] = useAsync(getEngWords);
-
-    const { loading, data = null, error } = state;
-
+    const wordDataList = useSelector( (state)=> state);
     const [word, setWord] = useState(undefined);
     const [descriptionArr, setDescription] = useState(undefined);
 
-    useEffect(()=>{
-        if(data === null) return;
-        let list = data["word"];
-        let randomIndex = getRandomArbitrary(0, list.length);
-        setWord(list[randomIndex]);
+    const [ refreshWordNum, setRefreshWordNum ] = useState( 0 );
 
-        let descArr = getRandomAr4Answer(list, list.length, randomIndex);
-        
-        
+    useEffect(()=>{
+        let list = wordDataList["word"];
+        let randomIndex = getRandomArbitrary(0, list.length);
+        let descArr = getRandomAr4Answer(list,  randomIndex);
+
+        setWord(list[randomIndex]);
         setDescription(getShuffleArray(descArr));
-    },[data]);
+    },[ refreshWordNum ]);
+
+    const handleRefresh = () => {
+        let num = refreshWordNum + 1;
+        setRefreshWordNum( num );
+    }
 
     console.log(descriptionArr)
 
@@ -47,8 +48,9 @@ function EngWordsPage(){
                     "justifyContent" : "center",
                 }}>
                     {
-                        loading ? <PuffLoader color={"black"} loading={loading} size={100}/>
-                        :   <>
+                        // loading ? <PuffLoader color={"black"} loading={loading} size={100}/>
+                        // :   
+                        <>
                                 <TitleWord size={"hd"}>
                                     {
                                         ( word != undefined ) && word.spelling
@@ -56,7 +58,7 @@ function EngWordsPage(){
                                 </TitleWord>
                                 <TitleWord size={"md"}>
                                     <Icon >
-                                        <FontAwesomeIcon icon={faRedo} onClick={refetch}/>
+                                        <FontAwesomeIcon icon={faRedo} onClick={handleRefresh}/>
                                     </Icon>
                                 </TitleWord>
                             </>

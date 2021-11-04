@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import { ThemeProvider } from "styled-components";
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+//modules
 import "./style/App.css";
 import "./style/common.styl";
 import theme from "./theme.js";
-import EngWordsPage , {EngWordsPage2} from "./pages/WordPage";
+import { getEngWords } from "./firebase/selecDb";
+import useAsync from "./util/useAsync";
+import EngWordsPage from "./pages/WordPage";
 import Header from "./pages/Logo";
 
 // 로그인 함수.
@@ -17,6 +23,9 @@ import Header from "./pages/Logo";
 // .catch((error) => {
 //     console.log("error",error)
 // });
+
+
+
 
 export default function App(){
 

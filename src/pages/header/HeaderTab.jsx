@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faSignInAlt, faSpellCheck, faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
@@ -32,8 +32,6 @@ const TagList = [
         Comp :  <FontAwesomeIcon icon={faSpellCheck} size={"lg"} />,
         desc : "단어 목록"
     }
-    
-   
 ]
 
 const OptionTag = styled.div`
@@ -44,8 +42,11 @@ const OptionTag = styled.div`
     cursor : pointer;
 `
 
+let updateTimeId;
+
 function HeaderTab( {isShow} ){
 
+    const [isUpdate, setIsUpdate] = useState(false);
    const [modalState, setModalState ] = useState({
         isOpen : false,
         data : {}
@@ -67,6 +68,15 @@ function HeaderTab( {isShow} ){
        }));
    }
 
+   useEffect(()=>{
+       clearInterval(updateTimeId);
+       updateTimeId = setInterval(() => {
+           setIsUpdate(false);
+       }, 1000 * 2);
+   },[isUpdate])
+
+   console.log("isUpdate", isUpdate);
+
     return (
         <TabBar style={isShow ? headerActive : headerHidden}>
                 {
@@ -81,8 +91,8 @@ function HeaderTab( {isShow} ){
                         </OptionTag>
                     )
                 }
-                <CustomModal isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
-                    <WordTable />
+                <CustomModal updating={isUpdate} isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
+                    <WordTable setUpdateHook={setIsUpdate}/>
                 </CustomModal>
         </TabBar>
     )

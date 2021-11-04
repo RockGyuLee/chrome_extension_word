@@ -146,5 +146,6 @@ export const hover = {
 }
 
 export const H1UnLine = styled.h1`
+    font-family : 'Himelody';
     border-bottom : 1px solid #222831;
 `
