@@ -2,13 +2,13 @@ import React, {useState, useEffect, Fragment} from "react";
 import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux"
+import PuffLoader from "react-spinners/PuffLoader";
 
 //modules
-import { getEngWords } from "../../firebase/selecDb";
-import useAsync from "../../util/useAsync";
 import WTable from "../../components/Table";
-import { isUpdateDb } from "../../firebase/crud";
-import { Span } from "../../components/Main"
+import { Span } from "../../components/Main";
+import { showToast } from "../../PortalReducer";
 
 const iconTag = {
     cursor : "pointer",
@@ -31,8 +31,7 @@ let throttleSpell, throttleDesc;
 
 
 function AddWrod({setHook}){
-
-
+    
     const [ addWordData, setAddWordData ] =useState({
         spelling : "",
         description : ""
@@ -53,11 +52,14 @@ function AddWrod({setHook}){
                 }, 400);
                 break;
         }
-        
     }
 
     const handleUpload = () => {
-        setHook( old => old.map(i=> i).concat(addWordData))
+        setHook( old => old.map(i=> i).concat(addWordData));
+        setAddWordData(Object.assign({},{
+            spelling : "",
+            description : ""
+        }))
     }
 
     return (
@@ -73,15 +75,19 @@ function AddWrod({setHook}){
 
 function WordTable( {setUpdateHook} ){
 
-    const [state] = useAsync(getEngWords);
-    const { loading, data = null, error } = state;
-    const [items, setItems] = useState([]);
+    let wordDataList = useSelector( (state)=> state)["word"];
+    const [items, setItems] = useState(null);
+    const dispatch = useDispatch();
 
     useEffect(()=> {
-        if(data === null) return;
-        let list = data["word"];
-        setItems(list);
-    },[state])
+        setItems(wordDataList)
+    },[])
+
+    if(items == null) {
+        return (
+            <PuffLoader color={"black"} loading={true} size={100} />
+        )
+    }
 
     const updateMyData = (rowIndex, columnId, value) => {
         setItems(old => 
@@ -97,19 +103,30 @@ function WordTable( {setUpdateHook} ){
         )
     }
 
-    const handleUpdateDb = () => {
-        if(items == data["word"]){
-            alert("영단어가 똑같습니다.");
+    const handleUpdate = () => {
+        if(items == wordDataList){
+            // alert("영단어가 똑같습니다.");
+            showToast({
+                msg : "영단어가 똑같습니다.",
+                position : "top-right"
+            })
             return;
         }
-        isUpdateDb(items);
+        // setUpdateHook(true);
         setUpdateHook(true);
+        dispatch({type : "UPDATE", data : {
+            wordList : items,
+            toast : {
+                msg : "업데이트하였습니다.",
+                position : "bottom-center",
+            }
+        }, });
     }
 
     return (
         <Fragment>
             <h2 title="업로드" style={{width : "100%"}} >
-                <FontAwesomeIcon style={iconTag} icon={faExternalLinkAlt} onClick={handleUpdateDb} size={"lg"} pull='right'/>
+                <FontAwesomeIcon style={iconTag} icon={faExternalLinkAlt} onClick={handleUpdate} size={"lg"} pull='right'/>
             </h2>
             <AddWrod setHook={setItems}/>
             <WTable items={items} updateMyData={updateMyData}/>

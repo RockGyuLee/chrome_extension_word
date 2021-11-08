@@ -1,24 +1,12 @@
-import React, {useMemo, useState, useEffect, Fragment} from "react";
+import React, {useMemo, useState, useEffect, forwardRef, useRef} from "react";
 import styled from "styled-components";
-import { useTable } from "react-table";
+import { useTable, useRowSelect } from "react-table";
 import PuffLoader from "react-spinners/PuffLoader";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux"
 
 //modules
 import { BButton} from "./Button";
 
-const iconTag = {
-    cursor : "pointer",
-    color : "#333333"
-}
-
-const PlusStyl = styled.div`
-  display : flex;
-  width : 100%;
-  align-items : center;
-  justify-content : center;
-`
 
 const Styles = styled.div`
   padding: 1rem;
@@ -60,6 +48,22 @@ const Styles = styled.div`
   }
 `
 
+const IndeterminateCheckbox = forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = useRef()
+    const resolvedRef = ref || defaultRef
+
+    useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate
+    }, [resolvedRef, indeterminate])
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    )
+  }
+)
 const EditableCell = ({
   value: initialValue,
   row: { index },
@@ -98,7 +102,7 @@ function WTable({ccolumns, items, updateMyData, ...props}){
         );
     }
 
-    console.log("Wtale",items);
+  const dispatch = useDispatch();
 
    const data = useMemo(
      () => items,
@@ -115,6 +119,10 @@ function WTable({ccolumns, items, updateMyData, ...props}){
          Header: '설명',
          accessor: 'description',
        },
+      //  {
+      //   Header: '제거',
+      //   accessor: '',
+      // },
      ],
      []
    )
@@ -125,61 +133,103 @@ function WTable({ccolumns, items, updateMyData, ...props}){
      headerGroups,
      rows,
      prepareRow,
+     selectedFlatRows,
+     state: { selectedRowIds },
    } = useTable({ 
      columns, data, updateMyData, defaultColumn 
+    },useRowSelect
+    , hooks => {
+      hooks.visibleColumns.push(columns => [
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()}/>
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ])
     })
- 
-   return (
-     <Styles>
-       <table {...getTableProps()} style={{ 
-          border: 'solid 1px',
-          width : '100%',
-          }}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  style={{
-                    borderBottom: 'solid 1px',
-                    background: '#EBDBFA',
-                    
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
+
+  const handleRemove = () => {
+    let ids = selectedFlatRows.map(item => item.id);
+    console.log("ids",ids);
+
+    ids.map( item => {
+      delete items[item]
+    })
+
+    let updateWordList = items.filter(i => i);
+
+    dispatch( {
+      type : "DELETE",
+      data : updateWordList,
+    });
+  }
+
+  return (
+    <Styles>
+      {
+        selectedFlatRows != 0  && <BButton text={"remove"} onClick={handleRemove} />
+      }
+      <table {...getTableProps()} style={{ 
+        border: 'solid 1px',
+        width : '100%',
+        }}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th
+                {...column.getHeaderProps()}
+                style={{
+                  borderBottom: 'solid 1px',
+                  background: '#EBDBFA',
+                  
+                  color: 'black',
+                  fontWeight: 'bold',
+                }}
+              >
+                {column.render('Header')}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map(row => {
+          prepareRow(row)
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                return (
+                  <td
+                    {...cell.getCellProps()}
+                    style={{
+                      padding: '10px',
+                      border: 'solid 1px gray',
+                    }}
+                  >
+                    {cell.render('Cell')}
+                  </td>
+                )
+              })}
             </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      style={{
-                        padding: '10px',
-                        border: 'solid 1px gray',
-                      }}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  )
-                })}
-              </tr>
             )
           })}
         </tbody>
       </table>
-     </Styles>
-     
+    </Styles>
    )
  }
 

@@ -73,8 +73,6 @@ export function MButton( {word, isCheck, text, ...props }){
 
 export function BButton( {text, ...props }){
 
-    console.log("props!!!",props);
-
     const handleClick = () => {
         props.onClick();
     }

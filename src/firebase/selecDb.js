@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function getEngWords() {
@@ -12,3 +12,21 @@ export async function getEngWords() {
        return null;
     }
 }
+
+// export async function getEngWords2(){
+//     const unsub = onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
+//         console.log("getEng",doc.data());
+//         return doc.data();
+//     });
+
+//     console.log("EngWords2", unsub);
+// }
+
+// const doc = db.collection('cities').doc('SF');
+
+// const observer = doc.onSnapshot(docSnapshot => {
+//   console.log(`Received doc snapshot: ${docSnapshot}`);
+//   // ...
+// }, err => {
+//   console.log(`Encountered error: ${err}`);
+// });

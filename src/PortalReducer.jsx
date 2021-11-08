@@ -3,10 +3,13 @@ import styled from "styled-components";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import PuffLoader from "react-spinners/PuffLoader";
+import { doc, onSnapshot } from "firebase/firestore";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
-import { getEngWords } from "./firebase/selecDb";
-import useAsync from "./util/useAsync";
+//modules
+import { db } from "./firebase/firebase";
+import { isUpdateDb } from "./firebase/crud";
 
 const Loading = styled.div`
     display : flex;
@@ -14,27 +17,65 @@ const Loading = styled.div`
     height : 100vh;
     justify-content : center;
     align-items : center;
-
 `
+
+export const showToast = (t) => {
+    // let {
+    //     msg = "Text가 비어있습니다.",
+    //     position = "top-right",
+
+    //  } = t;
+    toast(t.msg, {
+        position: t.position,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+}
 
 
 function Reducer(props){
 
-    const [state, fetch] = useAsync(getEngWords);
-    const { loading, data = null, error } = state;
+    const [data ,setData] =useState(null);
 
+    useEffect(()=>{
+        onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
+            setData(doc.data());
+        });
+    },[]);
 
-    if(state.data == null){
+    //데이터가 없다면 loading bar 표시.
+    if(data == null){
         return(
             <Loading> 
-                <PuffLoader color={"black"} loading={loading} size={100} />
+                <PuffLoader color={"black"} loading={true} size={100} />
             </Loading>
         )
     }
 
-    console.log("Reducer", data)
-
     const reducer = (state = data , action) => {
+        switch( action.type ){
+            case 'UPDATE' :
+                let { toast, wordList } = action.data;
+                if(typeof wordList[0].spelling == 'undefined'){
+                    toast = {
+                        msg : "형식이 맞지않아 실패하였습니다.",
+                        position : "bottom-center",
+                    }
+                    showToast(toast);
+                    return state;
+                }
+                isUpdateDb(wordList);
+                showToast(toast);
+                return state
+            case 'DELETE' :
+                console.log("state",action)
+                return state
+        }
+
         return state;
     }
 
@@ -42,9 +83,23 @@ function Reducer(props){
 
     return (
         <Provider store={store}>
-            {props.children}
+            <ToastContainer 
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                theme={"dark"}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <Fragment key={Math.random()}>
+                {props.children}
+            </Fragment>
+            
         </Provider>
-    )      
+    )
 }
 
 export default Reducer;

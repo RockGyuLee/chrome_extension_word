@@ -14,9 +14,12 @@ import { MButton } from "../components/Button";
 function EngWordsPage(){
 
     const wordDataList = useSelector( (state)=> state);
+    
+    //하면에 표시되는 단어와 해석이 들어있는 해석배열.
     const [word, setWord] = useState(undefined);
     const [descriptionArr, setDescription] = useState(undefined);
 
+    // 새로고침 아이콘 클릭 시 state 변경을 통해 화면 새로고침 기능을 위한 변수.
     const [ refreshWordNum, setRefreshWordNum ] = useState( 0 );
 
     useEffect(()=>{
@@ -47,22 +50,17 @@ function EngWordsPage(){
                     "alignContent" : "flex-end",
                     "justifyContent" : "center",
                 }}>
-                    {
-                        // loading ? <PuffLoader color={"black"} loading={loading} size={100}/>
-                        // :   
-                        <>
-                                <TitleWord size={"hd"}>
-                                    {
-                                        ( word != undefined ) && word.spelling
-                                    }
-                                </TitleWord>
-                                <TitleWord size={"md"}>
-                                    <Icon >
-                                        <FontAwesomeIcon icon={faRedo} onClick={handleRefresh}/>
-                                    </Icon>
-                                </TitleWord>
-                            </>
-                    }
+                   
+                    <TitleWord size={"hd"}>
+                        {
+                            ( word != undefined ) && word.spelling
+                        }
+                    </TitleWord>
+                    <TitleWord size={"md"}>
+                        <Icon >
+                            <FontAwesomeIcon icon={faRedo} onClick={handleRefresh}/>
+                        </Icon>
+                    </TitleWord>
                 </Flex>
             </ReactContainer>
             <ReactContainer elg={12} lg={12} md={12} sm={12} esm={12}

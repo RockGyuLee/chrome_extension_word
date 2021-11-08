@@ -75,8 +75,6 @@ function HeaderTab( {isShow} ){
        }, 1000 * 2);
    },[isUpdate])
 
-   console.log("isUpdate", isUpdate);
-
     return (
         <TabBar style={isShow ? headerActive : headerHidden}>
                 {

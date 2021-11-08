@@ -40,23 +40,11 @@ function CustomModal({isOpen, updating, closeModal, headerText, children}){
  
     return (
         <Modal isOpen={isOpen} style={customStyles}>
-          <Fragment>
-            {
-              updating
-              ? <div className="spinnerBox">
-                  <FontAwesomeIcon className={"spinner"} icon={faFan} size={"7x"}/>
-                  단어목록을 변경중입니다.
-                </div>
-              :  
-                <Fragment>
-                  <H1UnLine>
-                      {headerText && headerText}
-                      <FontAwesomeIcon style={hover} icon={faTimes} pull='right' onClick={closeModal}/>
-                  </H1UnLine>
-                  {children}
-                </Fragment>
-            }
-          </Fragment>
+          <H1UnLine>
+              {headerText && headerText}
+              <FontAwesomeIcon style={hover} icon={faTimes} pull='right' onClick={closeModal}/>
+          </H1UnLine>
+          {children}
         </Modal>
     )
 }
