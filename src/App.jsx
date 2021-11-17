@@ -7,8 +7,6 @@ import { createStore } from 'redux';
 import "./style/App.css";
 import "./style/common.styl";
 import theme from "./theme.js";
-import { getEngWords } from "./firebase/selecDb";
-import useAsync from "./util/useAsync";
 import EngWordsPage from "./pages/WordPage";
 import Header from "./pages/Logo";
 

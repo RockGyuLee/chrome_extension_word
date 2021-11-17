@@ -6,14 +6,12 @@ import { useSelector } from 'react-redux';
 
 //module Function import
 import { getRandomArbitrary, getRandomAr4Answer, getShuffleArray } from "../util/util";
-import useAsync from "../util/useAsync";
-import { getEngWords } from "../firebase/selecDb";
 import { ReactContainer, Container, Flex, TitleWord ,Icon} from "../components/Main";
 import { MButton } from "../components/Button";
 
 function EngWordsPage(){
 
-    const wordDataList = useSelector( (state)=> state);
+    const wordDataList = useSelector( (state)=> state.data);
     
     //하면에 표시되는 단어와 해석이 들어있는 해석배열.
     const [word, setWord] = useState(undefined);

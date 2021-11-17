@@ -1,11 +1,12 @@
-import React, {useMemo, useState, useEffect, forwardRef, useRef} from "react";
+import React, {useMemo, useState, useEffect, forwardRef, useRef, Fragment} from "react";
 import styled from "styled-components";
-import { useTable, useRowSelect } from "react-table";
+import { useTable, useRowSelect, usePagination } from "react-table";
 import PuffLoader from "react-spinners/PuffLoader";
 import { useDispatch } from "react-redux"
 
 //modules
 import { BButton} from "./Button";
+import { updateCurrentUser } from "@firebase/auth";
 
 
 const Styles = styled.div`
@@ -58,9 +59,7 @@ const IndeterminateCheckbox = forwardRef(
     }, [resolvedRef, indeterminate])
 
     return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
+      <input type="checkbox" ref={resolvedRef} {...rest} />
     )
   }
 )
@@ -95,12 +94,12 @@ const defaultColumn = {
   Cell: EditableCell,
 }
 
-function WTable({ccolumns, items, updateMyData, ...props}){
-    if(items.length == 0){
-        return (
-            <PuffLoader color={"black"} loading={true} size={100}/>
-        );
-    }
+function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
+  if(items.length == 0){
+      return (
+          <PuffLoader color={"black"} loading={true} size={100}/>
+      );
+  }
 
   const dispatch = useDispatch();
 
@@ -131,13 +130,23 @@ function WTable({ccolumns, items, updateMyData, ...props}){
      getTableProps,
      getTableBodyProps,
      headerGroups,
+     page,
      rows,
      prepareRow,
      selectedFlatRows,
-     state: { selectedRowIds },
+     canPreviousPage,
+     canNextPage,
+     pageOptions,
+     pageCount,
+     gotoPage,
+     nextPage,
+     previousPage,
+     setPageSize,
+     state: { pageIndex, pageSize },
    } = useTable({ 
-     columns, data, updateMyData, defaultColumn 
-    },useRowSelect
+     columns, data, updateMyData, defaultColumn ,
+     initialState: { pageIndex: 0 }
+    },usePagination,useRowSelect
     , hooks => {
       hooks.visibleColumns.push(columns => [
         {
@@ -163,7 +172,6 @@ function WTable({ccolumns, items, updateMyData, ...props}){
 
   const handleRemove = () => {
     let ids = selectedFlatRows.map(item => item.id);
-    console.log("ids",ids);
 
     ids.map( item => {
       delete items[item]
@@ -171,65 +179,129 @@ function WTable({ccolumns, items, updateMyData, ...props}){
 
     let updateWordList = items.filter(i => i);
 
-    dispatch( {
-      type : "DELETE",
-      data : updateWordList,
-    });
+    setItemHook(updateWordList);
+
   }
 
   return (
-    <Styles>
-      {
-        selectedFlatRows != 0  && <BButton text={"remove"} onClick={handleRemove} />
-      }
-      <table {...getTableProps()} style={{ 
-        border: 'solid 1px',
-        width : '100%',
-        }}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th
-                {...column.getHeaderProps()}
-                style={{
-                  borderBottom: 'solid 1px',
-                  background: '#EBDBFA',
-                  
-                  color: 'black',
-                  fontWeight: 'bold',
-                }}
-              >
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map(row => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return (
-                  <td
-                    {...cell.getCellProps()}
-                    style={{
-                      padding: '10px',
-                      border: 'solid 1px gray',
-                    }}
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                )
-              })}
+    <Fragment>
+      <Styles>
+        {
+          selectedFlatRows != 0  && <BButton width={"6vw"} height={"5vh"} text={"remove"} onClick={handleRemove} />
+        }
+        <table {...getTableProps()} style={{ 
+          marginTop : '2%',
+          border: 'solid 1px',
+          width : '100%',
+          }}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th
+                  {...column.getHeaderProps()}
+                  style={{
+                    borderBottom: 'solid 1px',
+                    background: '#EBDBFA',
+                    
+                    color: 'black',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {column.render('Header')}
+                </th>
+              ))}
             </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </Styles>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+        {page.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()}
+                        style={{
+                          padding: '10px',
+                          border: 'solid 1px gray',
+                        }}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          {/* {rows.map(row => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return (
+                    <td
+                      {...cell.getCellProps()}
+                      style={{
+                        padding: '10px',
+                        border: 'solid 1px gray',
+                      }}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  )
+                })}
+              </tr>
+              )
+            })} */}
+          </tbody>
+        </table>
+      </Styles>
+      <div className="pagination">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {"<<"}
+        </button>{" "}
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          {"<"}
+        </button>{" "}
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {">"}
+        </button>{" "}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {">>"}
+        </button>{" "}
+        <span>
+          페이지{" "}
+          <strong>
+            {pageIndex + 1} 의 {pageOptions.length}
+          </strong>{" "}
+        </span>
+        <span>
+          | 페이지 이동:{" "}
+          <input
+            type="number"
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: "100px" }}
+          />
+        </span>{" "}
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+             {pageSize} 펼치기
+            </option>
+          ))}
+        </select>
+      </div>
+    </Fragment>
    )
  }
 

@@ -10,27 +10,13 @@ import { hover, H1UnLine } from "../components/Main";
 const customStyles = {
   content: {
     width : '60vw',
-    height : '80vh',
+    height : '85vh',
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-20%',
     transform: 'translate(-50%, -50%)',
-  },
-};
-
-const updateStyles = {
-  content: {
-    width : '60vw',
-    height : '80vh',
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-20%',
-    transform: 'translate(-50%, -50%)',
-    filter : 'blur(5px)',
   },
 };
 

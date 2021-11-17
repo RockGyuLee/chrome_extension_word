@@ -9,6 +9,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 import WTable from "../../components/Table";
 import { Span } from "../../components/Main";
 import { showToast } from "../../PortalReducer";
+import { getDataInCollectionForDB } from "../../firebase/crud";
 
 const iconTag = {
     cursor : "pointer",
@@ -31,10 +32,15 @@ let throttleSpell, throttleDesc;
 
 
 function AddWrod({setHook}){
+
+    const wordClass = useSelector( state=>state.wordClass);
+
+    console.log("word",wordClass);
     
     const [ addWordData, setAddWordData ] =useState({
         spelling : "",
-        description : ""
+        description : "",
+        wordClass : ""
     });
 
     const handleAddWord = (type,evt) => {
@@ -58,7 +64,8 @@ function AddWrod({setHook}){
         setHook( old => old.map(i=> i).concat(addWordData));
         setAddWordData(Object.assign({},{
             spelling : "",
-            description : ""
+            description : "",
+            wordClass : ""
         }))
     }
 
@@ -68,6 +75,14 @@ function AddWrod({setHook}){
             <input onChange={handleAddWord.bind(this,"spelling")}/>
             <MarginSpan> 설명 </MarginSpan>
             <input onChange={handleAddWord.bind(this,"description")}/>
+            <MarginSpan> 품사 </MarginSpan>
+            {/* <select>
+                {
+                    wordClass.map(c=> (
+                        <option>{c.}</option>
+                    ))
+                }
+            </select> */}
             <FontAwesomeIcon onClick={handleUpload} style={{"display": "block", "margin" : "auto", "cursor" : "pointer"}} icon={faPlusCircle} size={"lg"} pull="right"/>
         </AddArea>
     )
@@ -75,7 +90,8 @@ function AddWrod({setHook}){
 
 function WordTable( {setUpdateHook} ){
 
-    let wordDataList = useSelector( (state)=> state)["word"];
+    let wordDataList = useSelector( (state)=> state.data)["word"];
+    
     const [items, setItems] = useState(null);
     const dispatch = useDispatch();
 
@@ -129,7 +145,7 @@ function WordTable( {setUpdateHook} ){
                 <FontAwesomeIcon style={iconTag} icon={faExternalLinkAlt} onClick={handleUpdate} size={"lg"} pull='right'/>
             </h2>
             <AddWrod setHook={setItems}/>
-            <WTable items={items} updateMyData={updateMyData}/>
+            <WTable setItemHook={setItems} items={items} updateMyData={updateMyData}/>
         </Fragment>
     )
 }

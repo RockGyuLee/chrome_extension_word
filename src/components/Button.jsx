@@ -13,8 +13,8 @@ const bColor = {
 export const Button = styled.button`
     border : 0mm solid ${({color,theme}) => color || theme.colors.main};
     cursor: pointer;
-    width : 10vw;
-    height : 8vh;
+    width : ${({width})=> width || '10vw'};
+    height : ${({height})=> height || '10vh'};
     border-radius : ${({radius,theme}) => radius || undefined};
     background-color : ${({bgc,theme}) => bgc || theme.colors.btn};
     &:hover {
@@ -62,7 +62,6 @@ export function MButton( {word, isCheck, text, ...props }){
 
     return (
         <Button
-            // className = {word.description == spanText ? 'btn-success' : 'btn-fail'}
             radius="12px" bgc={btnObj.color}
             onClick={handleClick.bind(null,text)}
         >
@@ -71,7 +70,7 @@ export function MButton( {word, isCheck, text, ...props }){
     )
 }
 
-export function BButton( {text, ...props }){
+export function BButton( {text, width, height,...props }){
 
     const handleClick = () => {
         props.onClick();
@@ -80,6 +79,7 @@ export function BButton( {text, ...props }){
     return (
         <Button
             // className = {word.description == spanText ? 'btn-success' : 'btn-fail'}
+            width={width} height={height}
             radius="12px" bgc={bColor[2]}
             onClick={handleClick}
         >

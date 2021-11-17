@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import PuffLoader from "react-spinners/PuffLoader";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, collection, getDocsa } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //modules
 import { db } from "./firebase/firebase";
-import { isUpdateDb } from "./firebase/crud";
+import { isUpdateDb, getDataInCollectionForDB } from "./firebase/crud";
 
 const Loading = styled.div`
     display : flex;
@@ -20,11 +20,12 @@ const Loading = styled.div`
 `
 
 export const showToast = (t) => {
+    
     // let {
     //     msg = "Text가 비어있습니다.",
     //     position = "top-right",
-
     //  } = t;
+
     toast(t.msg, {
         position: t.position,
         autoClose: 5000,
@@ -40,12 +41,18 @@ export const showToast = (t) => {
 function Reducer(props){
 
     const [data ,setData] =useState(null);
+    const [wordClass , setWordClass] = useState(null);
 
     useEffect(()=>{
         onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
             setData(doc.data());
         });
+        getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
+            setWordClass(res);
+        })
     },[]);
+
+    console.log("wordClass",wordClass);
 
     //데이터가 없다면 loading bar 표시.
     if(data == null){
@@ -56,7 +63,7 @@ function Reducer(props){
         )
     }
 
-    const reducer = (state = data , action) => {
+    const reducer = (state = {data, wordClass} , action) => {
         switch( action.type ){
             case 'UPDATE' :
                 let { toast, wordList } = action.data;
@@ -70,12 +77,12 @@ function Reducer(props){
                 }
                 isUpdateDb(wordList);
                 showToast(toast);
-                return state
-            case 'DELETE' :
-                console.log("state",action)
+                let state = {
+                    data : wordList,
+                    wordClass
+                }
                 return state
         }
-
         return state;
     }
 
