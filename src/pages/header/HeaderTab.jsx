@@ -46,7 +46,6 @@ let updateTimeId;
 
 function HeaderTab( {isShow} ){
 
-    const [isUpdate, setIsUpdate] = useState(false);
    const [modalState, setModalState ] = useState({
         isOpen : false,
         data : {}
@@ -68,13 +67,6 @@ function HeaderTab( {isShow} ){
        }));
    }
 
-   useEffect(()=>{
-       clearInterval(updateTimeId);
-       updateTimeId = setInterval(() => {
-           setIsUpdate(false);
-       }, 1000 * 2);
-   },[isUpdate])
-
     return (
         <TabBar style={isShow ? headerActive : headerHidden}>
                 {
@@ -89,8 +81,10 @@ function HeaderTab( {isShow} ){
                         </OptionTag>
                     )
                 }
-                <CustomModal updating={isUpdate} isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
-                    <WordTable setUpdateHook={setIsUpdate}/>
+                <CustomModal isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
+                    {
+                        modalState.data.hText == "단어 목록" ? <WordTable/> : <>Test</>
+                    }
                 </CustomModal>
         </TabBar>
     )

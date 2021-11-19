@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect, forwardRef, useRef, Fragment} from "react";
 import styled from "styled-components";
-import { useTable, useRowSelect, usePagination } from "react-table";
+import { useTable, useRowSelect, usePagination, useGlobalFilter ,useFilters } from "react-table";
 import PuffLoader from "react-spinners/PuffLoader";
 import { useDispatch } from "react-redux"
 
@@ -63,6 +63,7 @@ const IndeterminateCheckbox = forwardRef(
     )
   }
 )
+
 const EditableCell = ({
   value: initialValue,
   row: { index },
@@ -94,14 +95,44 @@ const defaultColumn = {
   Cell: EditableCell,
 }
 
+function SelectColumnFilter({
+  column: { filterValue, setFilter, preFilteredRows, id }
+
+}) {
+  // Calculate the options for filtering
+  // using the preFilteredRows
+  const options = useMemo(() => {
+    const options = new Set();
+    preFilteredRows.forEach((row) => {
+      options.add(row.values[id]);
+    });
+    return [...options.values()];
+  }, [id, preFilteredRows]);
+
+  // Render a multi-select box
+  return (
+    <select
+      value={filterValue}
+      onChange={(e) => {
+        setFilter(e.target.value || undefined);
+      }}
+    >
+      <option value="">All</option>
+      {options.map((option, i) => (
+        <option key={i} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
   if(items.length == 0){
       return (
           <PuffLoader color={"black"} loading={true} size={100}/>
       );
   }
-
-  const dispatch = useDispatch();
 
    const data = useMemo(
      () => items,
@@ -112,16 +143,21 @@ function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
      () => [
        {
          Header: '단어',
-         accessor: 'spelling', // accessor is the "key" in the data
+         accessor: 'spelling',
+         filter: null
        },
        {
          Header: '설명',
          accessor: 'description',
+         filter: null
        },
-      //  {
-      //   Header: '제거',
-      //   accessor: '',
-      // },
+       {
+        Header: '품사',
+        accessor: 'wordClass',
+        Filter : SelectColumnFilter,
+        filter: "includes"
+        
+      },
      ],
      []
    )
@@ -131,7 +167,6 @@ function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
      getTableBodyProps,
      headerGroups,
      page,
-     rows,
      prepareRow,
      selectedFlatRows,
      canPreviousPage,
@@ -146,7 +181,9 @@ function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
    } = useTable({ 
      columns, data, updateMyData, defaultColumn ,
      initialState: { pageIndex: 0 }
-    },usePagination,useRowSelect
+    },
+    useFilters,useGlobalFilter,
+    usePagination,useRowSelect
     , hooks => {
       hooks.visibleColumns.push(columns => [
         {
@@ -203,12 +240,13 @@ function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
                   style={{
                     borderBottom: 'solid 1px',
                     background: '#EBDBFA',
-                    
                     color: 'black',
                     fontWeight: 'bold',
                   }}
                 >
                   {column.render('Header')}
+                  &nbsp;
+                  {column.filter ? column.render("Filter") : null}
                 </th>
               ))}
             </tr>

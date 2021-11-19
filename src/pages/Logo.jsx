@@ -1,7 +1,7 @@
 import React, {useState, Fragment, useRef} from 'react';
 import styled from 'styled-components';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faChevronUp, faChevronDown, faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
 // module import
 import {Logo, Icon, calcWidthComponent} from "../components/Main";

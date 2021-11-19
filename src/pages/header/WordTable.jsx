@@ -16,10 +16,14 @@ const iconTag = {
     color : "#333333"
 }
 
+const Select = styled.select`
+    width : 10vw;
+`
+
 const AddArea = styled.div`
     display : flex;
     padding : 1rem;
-    width : 70%;
+    width : 80%;
     height : 5%;
     background-color : #F7F6F2;
 `
@@ -33,14 +37,18 @@ let throttleSpell, throttleDesc;
 
 function AddWrod({setHook}){
 
-    const wordClass = useSelector( state=>state.wordClass);
+    const wordClass = [{
+        description : "- - - -",
+        spelling : null
+    }].concat(useSelector( state=>state.wordClass)['word']);
 
-    console.log("word",wordClass);
+
+    const [refresh, setRefresh] = useState(Math.random()); 
     
     const [ addWordData, setAddWordData ] =useState({
         spelling : "",
         description : "",
-        wordClass : ""
+        wordClass : null
     });
 
     const handleAddWord = (type,evt) => {
@@ -60,43 +68,50 @@ function AddWrod({setHook}){
         }
     }
 
+    const handleAddWordClass = (evt) => {
+        setAddWordData(Object.assign({}, addWordData, {wordClass : evt.target.value}))
+    }
+
     const handleUpload = () => {
-        setHook( old => old.map(i=> i).concat(addWordData));
-        setAddWordData(Object.assign({},{
+        if(addWordData.wordClass == null ) return alert("품사를 선택해주세요.")
+        // setHook( old => old.map(i=> i).concat(addWordData));
+        setHook( old => [addWordData].concat(old.map(i=>i)) );
+        setAddWordData(Object.assign({},addWordData,{
             spelling : "",
             description : "",
-            wordClass : ""
+            wordClass : null
         }))
+        setRefresh(Math.random());
     }
 
     return (
-        <AddArea>
+        <AddArea key={refresh}>
             <MarginSpan> 단어 </MarginSpan>
             <input onChange={handleAddWord.bind(this,"spelling")}/>
             <MarginSpan> 설명 </MarginSpan>
             <input onChange={handleAddWord.bind(this,"description")}/>
             <MarginSpan> 품사 </MarginSpan>
-            {/* <select>
+            <Select onChange={handleAddWordClass}>
                 {
-                    wordClass.map(c=> (
-                        <option>{c.}</option>
+                    wordClass.map((c, idx) => (
+                        <option key={idx} value={c.spelling}>{c.description}</option>
                     ))
                 }
-            </select> */}
+            </Select>
             <FontAwesomeIcon onClick={handleUpload} style={{"display": "block", "margin" : "auto", "cursor" : "pointer"}} icon={faPlusCircle} size={"lg"} pull="right"/>
         </AddArea>
     )
 }
 
-function WordTable( {setUpdateHook} ){
+function WordTable(){
 
     let wordDataList = useSelector( (state)=> state.data)["word"];
-    
+
     const [items, setItems] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        setItems(wordDataList)
+        setItems(()=>[].concat(wordDataList));
     },[])
 
     if(items == null) {
@@ -121,15 +136,12 @@ function WordTable( {setUpdateHook} ){
 
     const handleUpdate = () => {
         if(items == wordDataList){
-            // alert("영단어가 똑같습니다.");
             showToast({
                 msg : "영단어가 똑같습니다.",
                 position : "top-right"
             })
             return;
         }
-        // setUpdateHook(true);
-        setUpdateHook(true);
         dispatch({type : "UPDATE", data : {
             wordList : items,
             toast : {

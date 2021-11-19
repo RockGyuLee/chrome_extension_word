@@ -22,7 +22,7 @@ const customStyles = {
 
 Modal.setAppElement("#root-modal");
 
-function CustomModal({isOpen, updating, closeModal, headerText, children}){
+function CustomModal({isOpen, closeModal, headerText, children}){
  
     return (
         <Modal isOpen={isOpen} style={customStyles}>
