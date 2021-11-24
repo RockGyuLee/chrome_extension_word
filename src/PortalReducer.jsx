@@ -52,8 +52,6 @@ function Reducer(props){
         })
     },[]);
 
-    console.log("wordClass",wordClass);
-
     //데이터가 없다면 loading bar 표시.
     if(data == null){
         return(

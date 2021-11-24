@@ -2,7 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore"
+import { getFirestore } from "firebase/firestore";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,3 +23,19 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+
+export async function signInWithEmailAndPW(id, pw){
+  console.log("firebase", id, pw)
+  const user = await signInWithEmailAndPassword(auth, id, pw)
+  .then((userCredential)=>{
+    return userCredential.user;
+  })
+  .catch((error)=>{
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+
+    return errorMessage;
+  })
+}

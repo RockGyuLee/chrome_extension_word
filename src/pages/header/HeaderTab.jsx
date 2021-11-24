@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { TabBar, calcWidthComponent, hover, H1UnLine} from "../../components/Main";
 import CustomModal from "../../components/Modal";
 import WordTable from "./WordTable";
+import Login from "./login/Login";
 
 const headerActive = {
     width : `${calcWidthComponent(1.3)}%`,
@@ -83,7 +84,7 @@ function HeaderTab( {isShow} ){
                 }
                 <CustomModal isOpen={modalState.isOpen} headerText={modalState.data.hText} closeModal={closeModal}>
                     {
-                        modalState.data.hText == "단어 목록" ? <WordTable/> : <>Test</>
+                        modalState.data.hText == "단어 목록" ? <WordTable/> : <Login />
                     }
                 </CustomModal>
         </TabBar>

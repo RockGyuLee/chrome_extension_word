@@ -9,7 +9,6 @@ import PuffLoader from "react-spinners/PuffLoader";
 import WTable from "../../components/Table";
 import { Span } from "../../components/Main";
 import { showToast } from "../../PortalReducer";
-import { getDataInCollectionForDB } from "../../firebase/crud";
 
 const iconTag = {
     cursor : "pointer",
