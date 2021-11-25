@@ -3,12 +3,12 @@ import styled from "styled-components";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import PuffLoader from "react-spinners/PuffLoader";
-import { doc, onSnapshot, collection, getDocsa } from "firebase/firestore";
+import { doc, onSnapshot, } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //modules
-import { db } from "./firebase/firebase";
+import { db,  } from "./firebase/firebase";
 import { isUpdateDb, getDataInCollectionForDB } from "./firebase/crud";
 
 const Loading = styled.div`
@@ -42,6 +42,10 @@ function Reducer(props){
 
     const [data ,setData] =useState(null);
     const [wordClass , setWordClass] = useState(null);
+    const userInfo = {
+        uid : '',
+        isLogin : false
+    }
 
     useEffect(()=>{
         onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
@@ -61,9 +65,9 @@ function Reducer(props){
         )
     }
 
-    const reducer = (state = {data, wordClass} , action) => {
-        switch( action.type ){
-            case 'UPDATE' :
+    function reducer(state = {data,wordClass,userInfo} , action){
+        switch (action.type) {
+            case 'UPDATE':
                 let { toast, wordList } = action.data;
                 if(typeof wordList[0].spelling == 'undefined'){
                     toast = {
@@ -73,15 +77,26 @@ function Reducer(props){
                     showToast(toast);
                     return state;
                 }
+                let wordArr = {
+                    word : wordList
+                }
                 isUpdateDb(wordList);
                 showToast(toast);
-                let state = {
-                    data : wordList,
-                    wordClass
+                return Object.assign({},state,{
+                    data : wordArr
+                });
+            case 'LOGIN':
+                console.log(action.data);
+                let obj = {
+                    uid : action.data['uid'],
+                    isLogin : true
                 }
-                return state
+                return Object.assign({},state, {
+                    userInfo : obj
+                });
+            default:
+                return state;
         }
-        return state;
     }
 
     let store =  createStore(reducer);

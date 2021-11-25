@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
-import PuffLoader from "react-spinners/PuffLoader";
 import { useSelector } from 'react-redux';
 
 //module Function import
@@ -33,8 +32,6 @@ function EngWordsPage(){
         let num = refreshWordNum + 1;
         setRefreshWordNum( num );
     }
-
-    console.log(descriptionArr)
 
     return (
         <Container>

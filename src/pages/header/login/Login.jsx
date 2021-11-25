@@ -4,7 +4,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} fr
 import {useSelector, useDispatch} from "react-redux";
 
 // modules
-import {auth} from "../../../firebase/firebase";
+import {auth, signInWithEmailAndPW} from "../../../firebase/firebase";
 import { ReactContainer, Flex } from "../../../components/Main";
 import { BButton } from "../../../components/Button"
 
@@ -30,15 +30,10 @@ function UserInfo(){
 
 function Login(){
     
-    // const isLogin = useSelector( state => state.userInfo);
-
-    // console.log(isLogin);
-
-    // if(isLogin.exist) return (
-    //     <UserInfo />
-    // );
+    const userInfo = useSelector( state => state.userInfo);
 
     // const [ isLogin , setIsLogin ] = useState(false);
+    
     const [id, setId] = useState('');
     const [pw, setPw] = useState('');
 
@@ -60,9 +55,16 @@ function Login(){
     }
 
     const handleLogin = () => {
-        dispatch({type : "LOGIN", data : {
-            id, pw
-        }})
+        signInWithEmailAndPW(id,pw)
+        .then((userCredential)=>{
+            dispatch({type : "LOGIN", data : userCredential.user})
+        })
+        .catch((error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage);
+        })
+        
     }
 
     return (
@@ -70,18 +72,22 @@ function Login(){
             width={12} height={10}
             elg={12} lg={12} md={12} sm={12} esm={12}
         >
-            <Flex css={{
-                "width" : "100%",
-                "height" : "100%",
-                "align-items" : "center",
-                "justifyContent" : "center",
-            }}>
-                이메일 :
-                <Input onChange={insertInfo4Id}/>
-                비밀번호 :
-                <Input onChange={insertInfo4Pw} type="password"/>
-                <BButton width={"6vw"} height={"5vh"} text={"login"} onClick={handleLogin}/>
-            </Flex>
+            {
+                userInfo.isLogin 
+                    ?   <UserInfo />
+                    :   <Flex css={{
+                            "width" : "100%",
+                            "height" : "100%",
+                            "align-items" : "center",
+                            "justifyContent" : "center",
+                        }}>
+                            이메일 :
+                            <Input onChange={insertInfo4Id}/>
+                            비밀번호 :
+                            <Input onChange={insertInfo4Pw} type="password"/>
+                            <BButton width={"6vw"} height={"5vh"} text={"login"} onClick={handleLogin}/>
+                        </Flex>
+            }
         </ReactContainer>
     )
 }

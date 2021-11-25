@@ -26,16 +26,15 @@ export const db = getFirestore(app);
 
 
 export async function signInWithEmailAndPW(id, pw){
-  console.log("firebase", id, pw)
-  const user = await signInWithEmailAndPassword(auth, id, pw)
-  .then((userCredential)=>{
-    return userCredential.user;
-  })
-  .catch((error)=>{
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage);
+  return signInWithEmailAndPassword(auth, id, pw)
+  // .then((userCredential)=>{
+  //   return userCredential.user;
+  // })
+  // .catch((error)=>{
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   console.log(errorMessage);
 
-    return errorMessage;
-  })
+  //   return errorMessage;
+  // })
 }
