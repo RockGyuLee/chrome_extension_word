@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import PuffLoader from "react-spinners/PuffLoader";
+import {onAuthStateChanged} from "firebase/auth"
 import { doc, onSnapshot, } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //modules
-import { db,  } from "./firebase/firebase";
+import { db, auth} from "./firebase/firebase";
 import { isUpdateDb, getDataInCollectionForDB } from "./firebase/crud";
 
 const Loading = styled.div`
@@ -42,10 +43,10 @@ function Reducer(props){
 
     const [data ,setData] =useState(null);
     const [wordClass , setWordClass] = useState(null);
-    const userInfo = {
-        uid : '',
+    const [userInfo, setUserInfo] = useState({
+        info : '',
         isLogin : false
-    }
+    });
 
     useEffect(()=>{
         onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
@@ -53,7 +54,18 @@ function Reducer(props){
         });
         getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
             setWordClass(res);
-        })
+        });
+
+        // auto login이 되면 해당 유저의 uid를 redux state에 저장하여 데이터를 확인해야 한다.
+        // 해당 유저들의 wordList를 파악해야한다.
+        localStorage.getItem('firebase') && onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserInfo(Object.assign({},userInfo, {
+                    info : user,
+                    isLogin : true
+                }))
+            }
+        });
     },[]);
 
     //데이터가 없다면 loading bar 표시.
@@ -86,14 +98,23 @@ function Reducer(props){
                     data : wordArr
                 });
             case 'LOGIN':
-                console.log(action.data);
                 let obj = {
-                    uid : action.data['uid'],
+                    info : action.data,
                     isLogin : true
                 }
                 return Object.assign({},state, {
                     userInfo : obj
                 });
+            case 'LOGOUT' :
+                localStorage.removeItem('firebase');
+                return Object.assign({},state, {
+                    userInfo : {
+                        info : '',
+                        isLogin : false
+                    }
+                });
+            case 'ERROR' :
+                return state;
             default:
                 return state;
         }

@@ -10,7 +10,10 @@ import { MButton } from "../components/Button";
 
 function EngWordsPage(){
 
-    const wordDataList = useSelector( (state)=> state.data);
+    const wordDataList = useSelector( (state)=> {
+        console.log(state);
+        return state.data
+    });
     
     //하면에 표시되는 단어와 해석이 들어있는 해석배열.
     const [word, setWord] = useState(undefined);

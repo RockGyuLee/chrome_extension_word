@@ -27,14 +27,4 @@ export const db = getFirestore(app);
 
 export async function signInWithEmailAndPW(id, pw){
   return signInWithEmailAndPassword(auth, id, pw)
-  // .then((userCredential)=>{
-  //   return userCredential.user;
-  // })
-  // .catch((error)=>{
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   console.log(errorMessage);
-
-  //   return errorMessage;
-  // })
 }
