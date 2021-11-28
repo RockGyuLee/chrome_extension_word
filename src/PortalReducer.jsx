@@ -49,23 +49,48 @@ function Reducer(props){
     });
 
     useEffect(()=>{
-        onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
-            setData(doc.data());
-        });
-        getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
-            setWordClass(res);
-        });
-
         // auto login이 되면 해당 유저의 uid를 redux state에 저장하여 데이터를 확인해야 한다.
         // 해당 유저들의 wordList를 파악해야한다.
-        localStorage.getItem('firebase') && onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUserInfo(Object.assign({},userInfo, {
-                    info : user,
-                    isLogin : true
-                }))
-            }
-        });
+        let session = localStorage.getItem('firebase');
+        if(session){
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    setUserInfo(Object.assign({},userInfo, {
+                        info : user,
+                        isLogin : true
+                    }))
+                    onSnapshot(doc(db, "wordCollection", user.uid), (doc) => {
+                        //로그인한 유저의 데이터 정보.
+                        let dataSize = doc.data()['word'].length;
+                        //데이터의 개수가 기본적으로 세팅되어야하는 값보다 작으면 기본으로 제공되는 데이터가 표시되어야한다.
+                        if( dataSize < 4 ){
+                            getDataInCollectionForDB("wordCollection",'wordList').then(res=>{
+                                console.log("res",res);
+                                setData(res)
+                            })
+                            alert(
+                                "입력한 데이터의 개수가 "+ dataSize + "개여서 기본으로 제공되는 단어목록이 표시됩니다.\n"
+                                + "최소한의 데이터 개수는 4개이상이여야 합니다."
+                            );
+                            return ;
+                        } else {
+                            setData(doc.data());
+                        }
+                    });
+                    getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
+                        setWordClass(res);
+                    });
+                }
+            });
+        } else {
+            onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
+                setData(doc.data());
+            });
+            getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
+                setWordClass(res);
+            });
+        }
+        
     },[]);
 
     //데이터가 없다면 loading bar 표시.
@@ -92,7 +117,7 @@ function Reducer(props){
                 let wordArr = {
                     word : wordList
                 }
-                isUpdateDb(wordList);
+                isUpdateDb(wordList,userInfo);
                 showToast(toast);
                 return Object.assign({},state,{
                     data : wordArr
@@ -102,11 +127,13 @@ function Reducer(props){
                     info : action.data,
                     isLogin : true
                 }
+                location.reload();
                 return Object.assign({},state, {
                     userInfo : obj
                 });
             case 'LOGOUT' :
                 localStorage.removeItem('firebase');
+                location.reload();
                 return Object.assign({},state, {
                     userInfo : {
                         info : '',

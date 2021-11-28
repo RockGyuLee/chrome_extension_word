@@ -70,7 +70,7 @@ export function MButton( {word, isCheck, text, ...props }){
     )
 }
 
-export function BButton( {text, width, height,...props }){
+export function BButton( {text, width, size="xxxl",  height, ...props }){
 
     const handleClick = () => {
         props.onClick();
@@ -78,12 +78,15 @@ export function BButton( {text, width, height,...props }){
 
     return (
         <Button
+            css={{
+                "margin" : "10px",
+            }}
             // className = {word.description == spanText ? 'btn-success' : 'btn-fail'}
             width={width} height={height}
             radius="12px" bgc={bColor[2]}
             onClick={handleClick}
         >
-            <Text size="xxxl">{text}</Text>
+            <Text size={size}>{text}</Text>
         </Button>
     )
 }

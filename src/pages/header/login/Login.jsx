@@ -17,7 +17,7 @@ const Input = styled.input`
     height : 3vh;
 `
 const MarginSpan = styled(Span)`
-    margin : 10px
+    margin : 10px;
 `
 
 let throttleId, throttlePw;
@@ -38,30 +38,7 @@ function Login(){
         )
     }
 
-    // onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //         console.log("user1",user)
-    //         const uid = user.uid;
-    //         dispatch({type : 'LOGIN', data : uid})
-    //     } else {
-
-    //         console.log("user",user);
-
-    //         return;
-    //     }
-    // });
-
     const dispatch = useDispatch();
-
-    // seesionId && onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //         console.log("user1",user)
-    //         dispatch({type : 'LOGIN', data : user})
-    //     } else {
-
-    //         return;
-    //     }
-    // });
 
     const insertInfo4Id = (evt) => {
         clearTimeout(throttleId);
@@ -137,7 +114,8 @@ function Login(){
                 <Flex css={{
                     "margin" : "5px",
                 }}>
-                    <BButton width={"6vw"} height={"5vh"} text={"로그인"} onClick={handleLogin}/>
+                    <BButton size={"xxl"} width={"6vw"} height={"5vh"} text={"로그인"} onClick={handleLogin}/>
+                    <BButton size={"xxl"} width={"6vw"} height={"5vh"} text={"회원가입"} onClick={handleLogin}/>
                 </Flex>
             </Flex>
         </ReactContainer>

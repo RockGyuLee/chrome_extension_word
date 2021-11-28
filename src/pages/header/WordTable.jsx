@@ -9,6 +9,7 @@ import PuffLoader from "react-spinners/PuffLoader";
 import WTable from "../../components/Table";
 import { Span } from "../../components/Main";
 import { showToast } from "../../PortalReducer";
+import { getDataInCollectionForDB } from "../../firebase/crud";
 
 const iconTag = {
     cursor : "pointer",
@@ -105,19 +106,27 @@ function AddWrod({setHook}){
 function WordTable(){
 
     let wordDataList = useSelector( (state)=> state.data)["word"];
+    let userInfo = useSelector( (state)=> state.userInfo);
+
+    console.log("info",userInfo);
+    // getDataInCollectionForDB()
 
     const [items, setItems] = useState(null);
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        setItems(()=>[].concat(wordDataList));
+        if(userInfo.isLogin){
+            getDataInCollectionForDB("wordCollection", userInfo.info.uid).then(res=>{
+                console.log(("test"),res)
+                setItems(()=> [].concat(res['word']));
+            })
+        } else{
+            getDataInCollectionForDB("wordCollection", 'wordList').then(res=>{
+                setItems(()=> [].concat(res['word']));
+            })
+        }
+        
     },[])
-
-    if(items == null) {
-        return (
-            <PuffLoader color={"black"} loading={true} size={100} />
-        )
-    }
 
     const updateMyData = (rowIndex, columnId, value) => {
         setItems(old => 

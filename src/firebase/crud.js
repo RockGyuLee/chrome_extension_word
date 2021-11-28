@@ -2,11 +2,21 @@ import { deleteField, getDoc,
     doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
-export async function isUpdateDb(datas){
+export async function isUpdateDb(datas, userInfo){
 
-    await setDoc(doc(db, 'wordCollection', "wordList"), {
-       word : datas
-    })
+    console.log("update",datas,userInfo)
+    // await setDoc(doc(db, 'wordCollection', "wordList"), {
+    //    word : datas
+    // })
+    if(userInfo.isLogin){
+        await setDoc(doc(db, 'wordCollection', userInfo.info['uid']), {
+            word : datas
+        })
+    } else{
+        await setDoc(doc(db, 'wordCollection', "wordList"), {
+            word : datas
+        })
+    }
 
     return true;
 }

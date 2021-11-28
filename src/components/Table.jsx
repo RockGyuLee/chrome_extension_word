@@ -128,7 +128,7 @@ function SelectColumnFilter({
 }
 
 function WTable({ccolumns, items, updateMyData, setItemHook, ...props}){
-  if(items.length == 0){
+  if(items === null){
       return (
           <PuffLoader color={"black"} loading={true} size={100}/>
       );
