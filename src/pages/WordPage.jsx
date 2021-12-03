@@ -11,10 +11,14 @@ import { MButton } from "../components/Button";
 function EngWordsPage(){
 
     const wordDataList = useSelector( (state)=> {
-        console.log(state);
         return state.data
     });
+
+    const wordClassList = useSelector( (state)=> {
+        return state.wordClass
+    });
     
+    console.log("wordClassList",wordClassList)
     //하면에 표시되는 단어와 해석이 들어있는 해석배열.
     const [word, setWord] = useState(undefined);
     const [descriptionArr, setDescription] = useState(undefined);
@@ -36,6 +40,8 @@ function EngWordsPage(){
         setRefreshWordNum( num );
     }
 
+    console.log("word",word);
+
     return (
         <Container>
             <ReactContainer 
@@ -52,6 +58,11 @@ function EngWordsPage(){
                     <TitleWord size={"hd"}>
                         {
                             ( word != undefined ) && word.spelling
+                        }
+                    </TitleWord>
+                    <TitleWord size={"md"}>
+                        {
+                            ( word != undefined ) && wordClassList['word'].find(i => i['spelling'] == word.wordClass)['description']
                         }
                     </TitleWord>
                     <TitleWord size={"md"}>

@@ -1,9 +1,9 @@
 import { collection, getDocs, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
 
-export async function getEngWords() {
+export async function getEngWords(uid) {
    
-    const docRef = doc(db, "wordCollection", "wordList");
+    const docRef = doc(db, "wordCollection", uid);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {

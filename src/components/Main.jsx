@@ -64,7 +64,7 @@ export const Flex = styled.div`
 `
 
 export const Text = styled.div`
-    font-size : ${({theme, size})=> theme.fontSizes[size] || theme.deskTopFontSizes["md"]};
+    font-size : ${({theme, size})=> theme.deskTopFontSizes[size] || theme.deskTopFontSizes["md"]};
     font-family : 'Himelody';
 `
 

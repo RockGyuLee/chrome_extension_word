@@ -48,52 +48,51 @@ function Reducer(props){
         isLogin : false
     });
 
+    
     useEffect(()=>{
-        // auto login이 되면 해당 유저의 uid를 redux state에 저장하여 데이터를 확인해야 한다.
-        // 해당 유저들의 wordList를 파악해야한다.
-        let session = localStorage.getItem('firebase');
-        if(session){
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    setUserInfo(Object.assign({},userInfo, {
-                        info : user,
-                        isLogin : true
-                    }))
-                    onSnapshot(doc(db, "wordCollection", user.uid), (doc) => {
-                        //로그인한 유저의 데이터 정보.
-                        let dataSize = doc.data()['word'].length;
-                        //데이터의 개수가 기본적으로 세팅되어야하는 값보다 작으면 기본으로 제공되는 데이터가 표시되어야한다.
-                        if( dataSize < 4 ){
-                            getDataInCollectionForDB("wordCollection",'wordList').then(res=>{
-                                console.log("res",res);
-                                setData(res)
-                            })
-                            alert(
-                                "입력한 데이터의 개수가 "+ dataSize + "개여서 기본으로 제공되는 단어목록이 표시됩니다.\n"
-                                + "최소한의 데이터 개수는 4개이상이여야 합니다."
-                            );
-                            return ;
-                        } else {
-                            setData(doc.data());
-                        }
-                    });
-                    getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
-                        setWordClass(res);
-                    });
-                }
-            });
-        } else {
-            onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
-                setData(doc.data());
-            });
-            getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
-                setWordClass(res);
-            });
-        }
-        
+
+        getDataInCollectionForDB("wordCollection",'wordClass').then(res=>{
+            setWordClass(res);
+        });
+
+        //로그아웃을 누르지 않는 이상 안없어진다. localstorage의 데이터를 확인 후 적용 하자.
+        onAuthStateChanged(auth, (user)=>{
+            if(user){
+                setUserInfo(Object.assign({},userInfo, {
+                    info : user,
+                    isLogin : true
+                }))
+            }
+
+            //session storage 이 있거나 localStorag에 값이 있다면 해당 로직 실행.
+            if(sessionStorage.length != 0 || localStorage.length != 0){
+                onSnapshot(doc(db, "wordCollection", user.uid), (doc) => {
+                    let dataSize = doc.data()['word'].length;
+                    if( dataSize < 4 ){
+                        getDataInCollectionForDB("wordCollection",'wordList').then(res=>{
+                            console.log("res",res);
+                            setData(res)
+                        })
+                        alert(
+                            "입력한 데이터의 개수가 "+ dataSize + "개여서 기본으로 제공되는 단어목록이 표시됩니다.\n"
+                            + "최소한의 데이터 개수는 4개이상이여야 합니다."
+                        );
+                        return ;
+                    } else {
+                        setData(doc.data());
+                    }
+                });
+            }
+            else {
+                onSnapshot(doc(db, "wordCollection", "wordList"), (doc) => {
+                    setData(doc.data());
+                });
+            }
+        })
     },[]);
 
-    //데이터가 없다면 loading bar 표시.
+    console.log(userInfo);
+    // 데이터가 없다면 loading bar 표시.
     if(data == null){
         return(
             <Loading> 
@@ -124,6 +123,15 @@ function Reducer(props){
                 });
             case 'LOGIN':
                 let obj = {
+                    info : action.data,
+                    isLogin : true
+                }
+                location.reload();
+                return Object.assign({},state, {
+                    userInfo : obj
+                }); 
+            case 'AUTOLOGIN':
+                obj = {
                     info : action.data,
                     isLogin : true
                 }

@@ -3,14 +3,13 @@ import styled from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux"
-import PuffLoader from "react-spinners/PuffLoader";
 
 //modules
 import WTable from "../../components/Table";
 import { Span } from "../../components/Main";
 import { showToast } from "../../PortalReducer";
 import { getDataInCollectionForDB } from "../../firebase/crud";
-
+import adminUID from "../../admin";
 const iconTag = {
     cursor : "pointer",
     color : "#333333"
@@ -113,15 +112,20 @@ function WordTable(){
 
     const [items, setItems] = useState(null);
     const dispatch = useDispatch();
-
+    console.log('uid',adminUID);
     useEffect(()=> {
-        if(userInfo.isLogin){
-            getDataInCollectionForDB("wordCollection", userInfo.info.uid).then(res=>{
-                console.log(("test"),res)
+        if(userInfo.info.uid == adminUID){
+            getDataInCollectionForDB("wordCollection", 'wordList').then(res=>{
                 setItems(()=> [].concat(res['word']));
             })
-        } else{
-            getDataInCollectionForDB("wordCollection", 'wordList').then(res=>{
+        }   
+        else if(userInfo.isLogin){
+            getDataInCollectionForDB("wordCollection", userInfo.info.uid).then(res=>{
+                setItems(()=> [].concat(res['word']));
+            })
+        }
+        else{
+            getDataInCollectionForDB("wordCollection", ).then(res=>{
                 setItems(()=> [].concat(res['word']));
             })
         }

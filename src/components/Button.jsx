@@ -65,7 +65,7 @@ export function MButton( {word, isCheck, text, ...props }){
             radius="12px" bgc={btnObj.color}
             onClick={handleClick.bind(null,text)}
         >
-            <Text size="xxxl">{btnObj.Text}</Text>
+            <Text size="lmd">{btnObj.Text}</Text>
         </Button>
     )
 }

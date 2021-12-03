@@ -5,3 +5,5 @@ package-lock.json
 /.vscode
 
 /dist
+
+/src/admin.js
