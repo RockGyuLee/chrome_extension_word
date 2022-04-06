@@ -1,0 +1,315 @@
+[
+    {
+        "WORD" : "abandon",
+        "CONTANTS" : "버리다",
+        "CLASS" : "v",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "ability",
+        "CONTANTS" : "능력",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "able",
+        "CONTANTS" : "할 수 있는",
+        "CLASS" : "adj",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "about",
+        "CONTANTS" : "대해서",
+        "CLASS" : "prep",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "above",
+        "CONTANTS" : "위에",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "abroad",
+        "CONTANTS" : "해외로",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "absence",
+        "CONTANTS" : "부재",
+        "CLASS" : "n",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "absolute",
+        "CONTANTS" : "절대적인",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "absolutely",
+        "CONTANTS" : "전적으로",
+        "CLASS" : "adv",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "absorb",
+        "CONTANTS" : "흡수하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "abuse",
+        "CONTANTS" : "남용",
+        "CLASS" : "n",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "academic",
+        "CONTANTS" : "학업의",
+        "CLASS" : "adj",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : -1
+    }, {
+        "WORD" : "accept",
+        "CONTANTS" : "받아들이다",
+        "CLASS" : "v",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "acceptable",
+        "CONTANTS" : "용인되는",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "access",
+        "CONTANTS" : "입장",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 2
+    }, {
+        "WORD" : "accident",
+        "CONTANTS" : "사고",
+        "CLASS" : "n",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "accommodation",
+        "CONTANTS" : "숙소",
+        "CLASS" : "n",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "accompany",
+        "CONTANTS" : "동반하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "according to",
+        "CONTANTS" : "~에 의하면",
+        "CLASS" : "prep",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "account",
+        "CONTANTS" : "예금",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "account",
+        "CONTANTS" : "간주하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "accurate",
+        "CONTANTS" : "정확한",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "accuse",
+        "CONTANTS" : "고발하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "achieve",
+        "CONTANTS" : "성취하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "achievement",
+        "CONTANTS" : "업적",
+        "CLASS" : "n",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "acid",
+        "CONTANTS" : "산성/신",
+        "CLASS" : "n",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "acknowledge",
+        "CONTANTS" : "인정하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "acquire",
+        "CONTANTS" : "습득하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "across",
+        "CONTANTS" : "가로질러",
+        "CLASS" : "adv",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "act",
+        "CONTANTS" : "행동",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "act",
+        "CONTANTS" : "행동하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "action",
+        "CONTANTS" : "행동",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "active",
+        "CONTANTS" : "활동적인",
+        "CLASS" : "adj",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "activist",
+        "CONTANTS" : "운동가",
+        "CLASS" : "n",
+        "W_LEVEL" : -1,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "activity",
+        "CONTANTS" : "움직임",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "actor",
+        "CONTANTS" : "배우",
+        "CLASS" : "n",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "actual",
+        "CONTANTS" : "실제의",
+        "CLASS" : "adj",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "actually",
+        "CONTANTS" : "실제로",
+        "CLASS" : "adv",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "adapt",
+        "CONTANTS" : "맞추다",
+        "CLASS" : "v",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "add",
+        "CONTANTS" : "더하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "addition",
+        "CONTANTS" : "덧셈",
+        "CLASS" : "n",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "additional",
+        "CONTANTS" : "추가의",
+        "CLASS" : "adj",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "address",
+        "CONTANTS" : "주소록",
+        "CLASS" : "n",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "address",
+        "CONTANTS" : "주소를 쓰다",
+        "CLASS" : "v",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "adequate",
+        "CONTANTS" : "충분한",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "adjust",
+        "CONTANTS" : "적응하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "administration",
+        "CONTANTS" : "관리",
+        "CLASS" : "n",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 2
+    },{
+        "WORD" : "administrative",
+        "CONTANTS" : "관리상의",
+        "CLASS" : "adj",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "admire",
+        "CONTANTS" : "존경하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 1,
+        "S_LEVEL" : 3
+    },{
+        "WORD" : "admission",
+        "CONTANTS" : "입장",
+        "CLASS" : "n",
+        "W_LEVEL" : 3,
+        "S_LEVEL" : -1
+    },{
+        "WORD" : "admit",
+        "CONTANTS" : "인정하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 1
+    },{
+        "WORD" : "adopt",
+        "CONTANTS" : "입양하다",
+        "CLASS" : "v",
+        "W_LEVEL" : 2,
+        "S_LEVEL" : 3
+    }
+]
