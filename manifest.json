@@ -3,7 +3,11 @@
     "description":              "영단어 ",
     "name":                     "English_Word",
     "version":                  "1",
+    "icons": { "16": "./imgs/rock.png",
+      "48": "./imgs/rock.png",
+     "128": "./imgs/rock.png"
+    },
     "chrome_url_overrides" : {
         "newtab": "./dist/index.html"
-      }
+    }
 }
