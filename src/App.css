@@ -1,11 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -39,4 +31,21 @@
 
 button {
   font-size: calc(10px + 2vmin);
+}
+
+.correctH1 {
+  background: linear-gradient(to right, #ffa3a1, #a62efd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.defaltText {
+  color : white;
+  background-color: black;
+}
+
+.correctText {
+  color : #a62efd;
+  background-color : white;
+  border : 0px;
 }

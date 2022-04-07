@@ -1,48 +1,57 @@
-import { useState } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { Layout } from './Components/Layout'
+import { HText, Text } from './Components/Texts'
+import { Button } from './Components/Buttons'
 import Rock from "../imgs/rock.png"
 import './App.css'
 
-import dataJson from "../"
+import dataJson from "../datas.json";
+import { putRandomIndex, getRandom4Datas } from "./utils/util";
 
 function App() {
+  let [rIdx, setRIdx ] = useState(putRandomIndex(dataJson))
+  let [ dataItem, setDataItem ] = useState({});
+  let [ contentList, setContentList ] = useState([]);
+  let [ correctIdx, setCorrectIdx ] = useState(-1);
+
+  useLayoutEffect(()=>{
+    setDataItem(dataJson[rIdx])
+
+    let copy_list = dataJson.slice();
+    copy_list.splice(rIdx, 1);
+
+    let c_list = getRandom4Datas(copy_list, dataJson[rIdx]);
+    setContentList(c_list);
+  }, [setRIdx]);
+
+  const handleClick = (idx) => {
+    let cList = contentList[idx];
+    setCorrectIdx(cList.WORD == dataItem.WORD ? idx : -1 );
+  }
+
+  console.log("correctIdx",correctIdx)
+
   return (
-    <Layout>
-       <img src={Rock} className="App-logo" alt="logo" />
-       <div> </div>
+    <Layout height={"100vh"}>
+      <div style={{ display : "flex", height : "50%", justifyContent : "center", alignItems : "center", }}>
+        <HText className={correctIdx != -1 && "correctH1"} size={"4rem"}>
+          {dataItem.WORD}
+        </HText>
+      </div>
+      <div style={{ display : "flex", justifyContent : "center", alignItems : "center", }}>
+        {
+          contentList.map((c, idx)=>{
+            return (
+              <Button key={idx} className={ idx == correctIdx ? "correctText" : "defaltText"}  onClick={handleClick.bind(null, idx)}>
+                <Text size={"2rem"}>
+                  {c.CONTANTS}
+                </Text>
+              </Button>
+            )
+          })
+        }
+      </div>
     </Layout>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={Rock} className="App-logo" alt="logo" />
-    //       <p>Hello Vite + React!</p>
-        /* <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p> */
   )
 }
 
