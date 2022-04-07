@@ -5,7 +5,7 @@ import { Button } from './Components/Buttons'
 import Rock from "../imgs/rock.png"
 import './App.css'
 
-import dataJson from "../datas.json";
+import dataJson from "./datas.json";
 import { putRandomIndex, getRandom4Datas } from "./utils/util";
 
 function App() {
