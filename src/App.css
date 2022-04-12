@@ -5,6 +5,16 @@
   }
 }
 
+@font-face {
+  font-family: Jua;
+  src: url(./styles/Jua-Regular.ttf);
+}
+
+@font-face {
+  font-family: Sunflower;
+  src: url(./styles/Sunflower-Medium.ttf);
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -39,7 +49,7 @@ button {
   -webkit-text-fill-color: transparent;
 }
 
-.defaltText {
+/* .defaltText {
   color : white;
   background-color: black;
 }
@@ -48,4 +58,4 @@ button {
   color : #a62efd;
   background-color : white;
   border : 0px;
-}
+} */

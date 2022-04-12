@@ -1,7 +1,8 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect, useEffect } from 'react'
 import { Layout } from './Components/Layout'
 import { HText, Text } from './Components/Texts'
-import { Button } from './Components/Buttons'
+import { Button } from './Components/Buttons';
+import { CheckBtn } from './Components/Buttons';
 import Rock from "../imgs/rock.png"
 import './App.css'
 
@@ -12,7 +13,14 @@ function App() {
   let [rIdx, setRIdx ] = useState(putRandomIndex(dataJson))
   let [ dataItem, setDataItem ] = useState({});
   let [ contentList, setContentList ] = useState([]);
-  let [ correctIdx, setCorrectIdx ] = useState(-1);
+  let [ correctIdx, setCorrectIdx ] = useState(0);
+  let [ keyIndex, setKeyIndex ] = useState(Math.random());
+
+  useEffect(()=>{
+    if(correctIdx == 0 ){
+      setKeyIndex(Math.random())
+    }
+  },[ correctIdx])
 
   useLayoutEffect(()=>{
     setDataItem(dataJson[rIdx])
@@ -24,17 +32,17 @@ function App() {
     setContentList(c_list);
   }, [setRIdx]);
 
-  const handleClick = (idx) => {
-    let cList = contentList[idx];
-    setCorrectIdx(cList.WORD == dataItem.WORD ? idx : -1 );
+  const handleClick = (value) => {
+    // let cList = contentList[idx];
+    setCorrectIdx( value );
   }
 
-  console.log("correctIdx",correctIdx)
+  // console.log("correctIdx",correctIdx)
 
   return (
     <Layout height={"100vh"}>
       <div style={{ display : "flex", height : "50%", justifyContent : "center", alignItems : "center", }}>
-        <HText className={correctIdx != -1 && "correctH1"} size={"4rem"}>
+        <HText className={correctIdx != 0 && "correctH1"} size={"4rem"}>
           {dataItem.WORD}
         </HText>
       </div>
@@ -42,11 +50,7 @@ function App() {
         {
           contentList.map((c, idx)=>{
             return (
-              <Button key={idx} className={ idx == correctIdx ? "correctText" : "defaltText"}  onClick={handleClick.bind(null, idx)}>
-                <Text size={"2rem"}>
-                  {c.CONTANTS}
-                </Text>
-              </Button>
+              <CheckBtn key={idx} corIdx={correctIdx} showWord={dataItem}  data={c} onClick={handleClick}/>
             )
           })
         }
