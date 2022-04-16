@@ -1,0 +1,12 @@
+{
+    "manifest_version":         3,
+    "description":              "영단어 3000자",
+    "name":                     "English_Word",
+    "version":                  "1.0.0",
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

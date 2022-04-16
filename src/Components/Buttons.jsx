@@ -4,6 +4,17 @@ import styled from "styled-components";
 //modules
 import { Text } from "./Texts";
 
+export const Button = styled.button`
+    background-color : ${(props)=> props.bgColor || "#fffff"};
+    border : 0px;
+    border-radius : .25rem;
+    padding-left : 1rem;
+    padding-right : 1rem;
+    font-weight : 700;
+    cursor : pointer;
+    margin : 2rem;
+`
+
 const _btnColor = {
     default : "#EBDBFA",
     succ : "white",
@@ -16,59 +27,43 @@ const _txtColor = {
     fail : "white"
 }
 
-// 정답인 버튼 클릭.
-let getTrueValue = (d, hook) => {
-    hook((oldState)=>({
-        ...oldState,
-        btnColor : _btnColor.succ,
-        textColor : _txtColor.succ
-    }))
-    return 1;
-}
+export function CheckBtn({selIdx, idx, answerIdx, answerValue, data, onClick}){
 
-// 정답이 아닌 버튼 클릭.
-let getFalseValue = (d, hook) => {
-
-    hook((oldState)=>({
-        ...oldState,
-        btnColor : _btnColor.fail,
-        textColor : _txtColor.fail
-    }))
-
-    setTimeout(()=>{
-        hook((oldState)=>({
-            ...oldState,
-            btnColor : _btnColor.default,
-            textColor : _txtColor.default
-        }))
-    }, 2 * 1000)
-
-    return 0;
-}
-
-export function CheckBtn({corIdx, showWord, data, onClick}){
 
     let [ settingsValue, setValue ] = useState({
         btnColor : _btnColor.default,
         textColor : _txtColor.default,
-        text : data.CONTANTS
+        text : data.CONTENTS
     })
 
     useLayoutEffect(()=>{
-        if( corIdx != 0) return;
-        setValue((oldState)=>({
-            ...oldState,
-            btnColor : _btnColor.default,
-            textColor : _txtColor.default,
-        }))
-    }, [corIdx])
+
+        if( (selIdx === answerIdx) && (selIdx == idx) ) {
+            setValue({
+                btnColor : _btnColor.succ,
+                textColor : _txtColor.succ,
+                text : data.CONTENTS
+            })
+        } 
+        else if(selIdx == idx){
+            setValue({
+                btnColor : _btnColor.fail,
+                textColor : _txtColor.fail,
+                text : data.CONTENTS
+            })
+        } else {
+            setValue({
+                btnColor : _btnColor.default,
+                textColor : _txtColor.default,
+                text : data.CONTENTS
+            })
+        }
+      
+    }, [selIdx])
 
     const handleClick = () => {
-        let getValueHandler = showWord.CONTANTS == data.CONTANTS 
-            ? getTrueValue
-            : getFalseValue
-        let check = getValueHandler(data, setValue)
-        onClick(check)
+       
+        onClick(idx)
     }
 
     return (
@@ -80,14 +75,3 @@ export function CheckBtn({corIdx, showWord, data, onClick}){
     )
 }
 
-
-export const Button = styled.button`
-    background-color : ${(props)=> props.bgColor || "#fffff"};
-    border : 0px;
-    border-radius : .25rem;
-    padding-left : 1rem;
-    padding-right : 1rem;
-    font-weight : 700;
-    cursor : pointer;
-    margin : 2rem;
-`
