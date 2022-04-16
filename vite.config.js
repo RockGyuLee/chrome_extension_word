@@ -7,7 +7,7 @@ const outDir = resolve(__dirname, 'dist' )
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base : '/chrome_extension_word/',
+  base : '/chrome_extension_word/',
   plugins: [
     react(),
   ],
